@@ -1,0 +1,482 @@
+package com.voracious.graphics;
+
+import java.awt.event.KeyEvent;
+
+import com.voracious.data.GameData;
+import com.voracious.data.Monster;
+import com.voracious.data.Player;
+import com.voracious.graphics.components.Entity;
+import com.voracious.graphics.components.Screen;
+import com.voracious.graphics.components.Sprite;
+
+/**
+ * 
+ * @author Aaron Baker
+ *
+ */
+
+public class PlayScreen extends Screen {
+	private Player player;
+	Sprite s;
+	private boolean pointGiven=false;
+	private boolean swap;
+	private GameData data;
+	
+	long startTime;
+	
+	int i[]={1};
+	Entity N_door,S_door,E_door,W_door;
+	
+	
+	public PlayScreen(int width, int height) {
+
+		super(width, height);
+
+        s= new Sprite(200,150,"officalFloor.png");
+        s.draw(this, 0, 0);
+        
+        this.setData(new GameData());
+
+        shutAllDoors();
+  
+		player =new Player("Aaron");
+		
+		this.startTime=System.nanoTime();
+	}
+	
+	@Override
+	public void render() {
+		s.draw(this, 0, 0);
+		player.getPlayerE().draw(this);
+		
+						
+		N_door.setX(90);
+	    N_door.setY(2);
+	    N_door.draw(this);
+	    
+	    S_door.setX(90);
+	    S_door.setY(135);
+	    S_door.draw(this);
+	    
+	    W_door.setX(1);
+	    W_door.setY(67);
+	    W_door.draw(this);
+	    
+	    E_door.setX(186);
+	    E_door.setY(67);
+	    E_door.draw(this);
+
+	    int x=this.player.getLoc().getFirst();
+		int y=this.player.getLoc().getSecond();
+		for(int i=0;i<this.getData().getMonsters().get(x).get(y).size();i++){
+			//this.getData().getMonsters().get(x).get(y).get(i).getE().setY(40);
+			//this.getData().getMonsters().get(x).get(y).get(i).getE().setX(100);
+			this.getData().getMonsters().get(x).get(y).get(i).getE().draw(this);
+		}
+		
+		
+	    
+	}
+	
+	@Override
+	public void tick() {
+		player.getPlayerE().tick();
+		/*System.out.println(this.player.getStat(0)
+				+", "+this.player.getStat(1)
+				+", "+this.player.getStat(2)
+				+", "+this.player.getStat(3));*/
+		
+		/*System.out.println(this.getData().getMonsters().get(0).get(0).get(0).getE().getVx()+", "
+				+this.getData().getMonsters().get(0).get(0).get(0).getE().getVy()+", "
+				+this.getData().getMonsters().get(0).get(0).get(0).getE().getX()+", "
+				+this.getData().getMonsters().get(0).get(0).get(0).getE().getY());*/
+		
+		/*System.out.println(player.getPlayerE().getX()+", "
+				+player.getPlayerE().getY());*/
+		
+		
+		
+		castSpell();
+		//sword
+		//defend
+		
+		//go through all of the elements at get(x).get(y) these are the monsters on that particular floor.
+		int x=this.player.getLoc().getFirst();
+		int y=this.player.getLoc().getSecond();
+		moveMonsters(x,y);
+		
+		characterHitTest();
+		
+		
+		openPauseMenu();
+		
+		roomClearer();
+			
+		//TODO after moving into the next room and the doors shut make the isPointGiven var= false
+		
+		characterMover();
+		
+	}
+
+	
+
+	@Override
+	public void start() {
+		InputHandler.registerKey(KeyEvent.VK_D);
+		InputHandler.registerKey(KeyEvent.VK_A);
+		InputHandler.registerKey(KeyEvent.VK_W);
+		InputHandler.registerKey(KeyEvent.VK_S);
+
+		InputHandler.registerKey(KeyEvent.VK_Q);//used for casting magic
+		
+		InputHandler.registerKey(KeyEvent.VK_RIGHT);
+		InputHandler.registerKey(KeyEvent.VK_LEFT);
+		InputHandler.registerKey(KeyEvent.VK_UP);
+		InputHandler.registerKey(KeyEvent.VK_DOWN);
+		
+
+		InputHandler.registerKey(KeyEvent.VK_ESCAPE);
+		
+
+		InputHandler.registerKey(KeyEvent.VK_SPACE);
+		
+	}
+	
+	@Override
+	public void stop() {
+		InputHandler.deregisterKey(KeyEvent.VK_D);
+		InputHandler.deregisterKey(KeyEvent.VK_A);
+		InputHandler.deregisterKey(KeyEvent.VK_W);
+		InputHandler.deregisterKey(KeyEvent.VK_S);
+		
+		InputHandler.deregisterKey(KeyEvent.VK_RIGHT);
+		InputHandler.deregisterKey(KeyEvent.VK_LEFT);
+		InputHandler.deregisterKey(KeyEvent.VK_UP);
+		InputHandler.deregisterKey(KeyEvent.VK_DOWN);
+		
+
+		InputHandler.deregisterKey(KeyEvent.VK_ESCAPE);
+		
+		
+		InputHandler.registerKey(KeyEvent.VK_SPACE);
+	
+	}
+	
+	public boolean getSwap() {
+		return swap;
+	}
+
+	public void changeSwap() {
+		this.swap = !this.swap;
+	}
+
+	/**
+	 * @return the data
+	 */
+	public GameData getData() {
+		return data;
+	}
+
+	/**
+	 * @param data the data to set
+	 */
+	public void setData(GameData data) {
+		this.data = data;
+	}
+	
+	public void changeClearDoors(){
+		N_door=new Entity(22,15,i,"upN_Door.png");
+        E_door=new Entity(14,17,i,"upE_Door.png");
+	}
+	
+	public void shutAllDoors(){
+		N_door=new Entity(22,15,i,"downN_door.png");
+        S_door=new Entity(22,15,i,"downS_door.png");
+        E_door=new Entity(14,17,i,"downE_door.png");
+        W_door=new Entity(14,17,i,"downW_door.png");
+	}
+
+	/**
+	 * @return the pointGiven
+	 */
+	public boolean isPointGiven() {
+		return pointGiven;
+	}
+
+	/**
+	 * @param pointGiven the pointGiven to set
+	 */
+	public void setPointGiven(boolean pointGiven) {
+		this.pointGiven = pointGiven;
+	}
+
+	
+	public Player getPlayer(){
+		return this.player;
+	}
+	
+	public void setPlayer(Player tmp){
+		this.player=tmp;
+	}
+	
+	public void castSpell(){//TODO make sure after clearing a room that the current hp and mp = the array vals
+		int cMP=this.getPlayer().getCurrentMp();
+		int costMP=this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getCost();
+		if(cMP >= costMP /*spell not on the screen*/){
+			
+			if(InputHandler.isPressed(KeyEvent.VK_LEFT)&&InputHandler.isPressed(KeyEvent.VK_Q)){
+				//this.getPlayer().setCurrentMp(cMP-costMP);
+				
+			}
+			else if(InputHandler.isPressed(KeyEvent.VK_UP)&&InputHandler.isPressed(KeyEvent.VK_Q)){
+				//this.getPlayer().setCurrentMp(cMP-costMP);
+				
+			}
+			else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)&&InputHandler.isPressed(KeyEvent.VK_Q)){
+				//this.getPlayer().setCurrentMp(cMP-costMP);
+				/*this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setX(this.getPlayer().getPlayerE().getX()+this.getPlayer().getWIDTH());
+				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY(this.getPlayer().getPlayerE().getY()+this.getPlayer().getHEIGHT()/2);
+				this.getPlayer().getMagicks().get(0).getE().draw(this);*/
+				
+				
+			}
+			else if(InputHandler.isPressed(KeyEvent.VK_DOWN)&&InputHandler.isPressed(KeyEvent.VK_Q)){
+				//this.getPlayer().setCurrentMp(cMP-costMP);
+				
+			}
+		}
+		else{
+			System.out.print("NO MP");
+		}
+	}
+	
+	public void characterMover(){
+		if((InputHandler.isPressed(KeyEvent.VK_D) /*||
+				InputHandler.isPressed(KeyEvent.VK_RIGHT)*/) && player.canMoveRight()){
+			player.getPlayerE().setVx(1.0);
+		}
+		else if((InputHandler.isPressed(KeyEvent.VK_A)/*||
+				InputHandler.isPressed(KeyEvent.VK_LEFT)*/) && player.canMoveLeft()){
+			player.getPlayerE().setVx(-1.0);
+		}
+		else{
+			player.getPlayerE().setVx(0);
+		}
+		
+		if((InputHandler.isPressed(KeyEvent.VK_W)/*||
+				InputHandler.isPressed(KeyEvent.VK_UP)*/) && player.canMoveUp()){
+			player.getPlayerE().setVy(-0.75);
+		}
+		else if((InputHandler.isPressed(KeyEvent.VK_S)/*||
+				InputHandler.isPressed(KeyEvent.VK_DOWN)*/) && player.canMoveDown()){
+			player.getPlayerE().setVy(0.75);
+		}	
+		else{
+			player.getPlayerE().setVy(0);
+		}
+	}
+	
+	private void openPauseMenu() {
+		if(InputHandler.isPressed(KeyEvent.VK_ESCAPE)){
+			this.changeSwap();			
+//these next two lines are kill lines to test the opening of the doors
+/*			if(this.getData().getMonsters().get(0).get(0).size()!=0)
+				this.getData().getMonsters().get(0).get(0).get(0).setHp(0);*/
+		}
+		
+	}
+	
+	private void zeroVelocity(Entity E){
+		E.setVx(0.0);
+		E.setVy(0.0);
+	}
+	
+	private void characterHitTest() {
+		if(player.getPlayerE().hitTest(E_door)||player.getPlayerE().hitTest(W_door)
+				||player.getPlayerE().hitTest(S_door)||player.getPlayerE().hitTest(N_door)){
+			if(player.getPlayerE().hitTest(N_door)&& this.N_door.getFileName().equals("upN_Door.png")){
+				//System.out.println("YUP!");
+				//move the player up to the next room
+				this.getPlayer().getPlayerE().setY(121);//as of now the player must slow move up by lightly tapping up and to stay incontact w/ the door
+				this.zeroVelocity(this.getPlayer().getPlayerE());
+				this.N_door=new Entity(22,15,i,"downN_door.png");//TODO it don't change
+				//close the new n.door
+				//set the y to value so touching the Sdoor and if up then close the door. if the player moves down on the sdoor and not shut move it back down
+			}
+			else if(player.getPlayerE().hitTest(E_door)&& this.E_door.getFileName().equals("upE_Door.png")){
+				//System.out.println("YUP!");
+				//move the player up to the next room
+				this.getPlayer().getPlayerE().setX(16);//as of now the player must slow move up by lightly tapping up and to stay incontact w/ the door
+				this.zeroVelocity(this.getPlayer().getPlayerE());
+				this.E_door=new Entity(14,17,i,"downE_door.png");//TODO it don't change
+				//close the new e.door
+				//set the y to value so touching the Sdoor and if up then close the door. if the player moves down on the sdoor and not shut move it back down
+			}
+			else{
+				
+				//System.out.println("Nope!");
+			}
+			/*if(player.getPlayerE().hitTest(S_door))
+				System.out.println("South side!");*/
+		}
+	}
+	
+	private void moveMonsters(int x, int y) {
+		for(int i=0;i<this.getData().getMonsters().get(x).get(y).size();i++){
+			Monster tmp=this.getData().getMonsters().get(x).get(y).get(i);
+			
+			if(tmp.getMovement().equals("Close")){
+				moveCloser(tmp);
+			}
+			else if(tmp.getMovement().equals("Rand")){
+				moveRandom(tmp);
+				
+			}
+			else if(tmp.getMovement().equals("Fig8Knot")){//vertical figure 8
+				moveFig8Knot(tmp);
+			}
+			else if(tmp.getMovement().equals("OutLineCCW")){
+				moveOutLineCounterClockWise(tmp);
+			}
+			else if(tmp.getMovement().equals("OutLineCW")){
+				moveOutLineClockWise(tmp);
+			}
+			
+
+			
+			//check the health status to see if it needs to be removed
+			if(tmp.getHp()<=0){
+				this.getData().getMonsters().get(x).get(y).remove(tmp);
+				this.player.setNumKills(this.player.getNumKills()+1);
+			}
+			else
+				tmp.getE().tick();
+		}
+	}
+	
+	private void moveCloser(Monster tmp){//vx and vy were at 0.5
+		//TODO make sure the movement is in the play space before and after the movement
+		if(tmp.getE().getX()
+				>player.getPlayerE().getX()){//go left to player
+			tmp.getE().setVx(-0.35);
+		}
+		else if(tmp.getE().getX()
+				<player.getPlayerE().getX()){//go right to player
+			tmp.getE().setVx(0.35);
+		}
+		else{
+			tmp.getE().setVx(0.0);
+		}
+		
+		if(tmp.getE().getY()
+				>player.getPlayerE().getY()){//go up to player
+			tmp.getE().setVy(-0.35);
+		}
+		else if(tmp.getE().getY()
+				<player.getPlayerE().getY()){//go down to player
+			tmp.getE().setVy(0.35);
+		}
+		else{
+			tmp.getE().setVy(0.0);
+		}		
+	}
+	
+	private void moveRandom(Monster tmp){
+		//TODO make sure dosen't move off the screen
+		System.out.println("Here");
+		int rand=(int) Math.ceil(Math.random()*4);
+		if(rand==1){//move left
+			tmp.getE().setVx(-0.25);
+		}
+		else if(rand==2){//move up
+			tmp.getE().setVy(-0.25);
+		}
+		else if(rand==3){//move right
+			tmp.getE().setVx(0.25);
+		}
+		else if(rand==4){//move down
+			tmp.getE().setVx(0.25);
+		}
+		else{//error
+			System.out.println("ERROR RAND NOT IN [1,4]");
+		}
+		
+	}
+	
+	double temp=0;
+	private void moveFig8Knot(Monster tmp){//%3 or 3billion.0
+		temp+=((System.nanoTime()-this.startTime)/(9000000000.0));
+		
+		double trig=(2+Math.cos(2*temp));
+		
+		double x= trig*Math.cos(3*temp);
+		double y= trig*Math.sin(3*temp);
+		
+		
+		//TODO reset the offsets and make sure in the room
+		
+		tmp.getE().setX(x*25+70);
+		tmp.getE().setY(y*25+40);
+		
+	}
+
+	private void moveOutLineClockWise(Monster tmp){	
+		if(tmp.getE().getX()+((tmp.getE().getWidth())/2)<171 &&tmp.getE().getY()+ ((tmp.getE().getHeight())/2)==121){//moves accross the bottom to right
+			tmp.getE().setVx(1.0);
+			tmp.getE().setVy(0.0);
+		}
+		else if(tmp.getE().getX()+((tmp.getE().getWidth())/2)>36 && tmp.getE().getY()+ ((tmp.getE().getHeight())/2)==17){//moves arccoss the top to the left
+			tmp.getE().setVx(-1.0);
+			tmp.getE().setVy(0.0);
+		}
+		else if(tmp.getE().getY()+ ((tmp.getE().getHeight())/2)> 17 && tmp.getE().getX()+((tmp.getE().getWidth())/2)==171){//moves up right wall
+			tmp.getE().setVy(-1.0);
+			tmp.getE().setVx(0.0);
+		}
+		else if(tmp.getE().getY()+ ((tmp.getE().getHeight())/2)< 121 && tmp.getE().getX()+((tmp.getE().getWidth())/2)==36){//moves down the left wall
+			tmp.getE().setVy(1.0);
+			tmp.getE().setVx(0.0);
+		}
+		else{
+			tmp.getE().setVx(0.0);
+			tmp.getE().setVy(0.0);
+			//System.out.println(tmp.getE().getX()+((tmp.getE().getWidth())/2)+", "+tmp.getE().getY()+ ((tmp.getE().getHeight())/2));
+		}	
+	}
+
+	private void moveOutLineCounterClockWise(Monster tmp){	
+		if(tmp.getE().getX()+((tmp.getE().getWidth())/2)<171 &&tmp.getE().getY()+ ((tmp.getE().getHeight())/2)==17){//moves accross the top to right
+			tmp.getE().setVx(1.0);
+			tmp.getE().setVy(0.0);
+		}
+		else if(tmp.getE().getX()+((tmp.getE().getWidth())/2)>36 && tmp.getE().getY()+ ((tmp.getE().getHeight())/2)==121){//moves arccoss the bottom to the left
+			tmp.getE().setVx(-1.0);
+			tmp.getE().setVy(0.0);
+		}
+		else if(tmp.getE().getY()+ ((tmp.getE().getHeight())/2)> 17 && tmp.getE().getX()+((tmp.getE().getWidth())/2)==36){//moves up left wall
+			tmp.getE().setVy(-1.0);
+			tmp.getE().setVx(0.0);
+		}
+		else if(tmp.getE().getY()+ ((tmp.getE().getHeight())/2)< 121 && tmp.getE().getX()+((tmp.getE().getWidth())/2)==171){//moves down the right wall
+			tmp.getE().setVy(1.0);
+			tmp.getE().setVx(0.0);
+		}
+		else{
+			tmp.getE().setVx(0.0);
+			tmp.getE().setVy(0.0);
+			//System.out.println(tmp.getE().getX()+((tmp.getE().getWidth())/2)+", "+tmp.getE().getY()+ ((tmp.getE().getHeight())/2));
+		}	
+	}
+	
+	private void roomClearer() {
+		if(this.getData().getMonsters().get(this.player.getLoc().getFirst()).get(this.player.getLoc().getSecond()).size()==0){//the room is cleared, the x->y array list is empty
+			this.getData().setComplete(this.player.getLoc().getFirst(), this.player.getLoc().getSecond(), true);
+			this.getPlayer().setNumRoomsCleared(this.player.getNumRoomsCleared()+1);
+			this.getPlayer().fullHeal();
+			if(!this.isPointGiven()){
+				this.getPlayer().setNumPowerUps(this.getPlayer().getNumPowerUps()+1);
+				this.setPointGiven(!this.isPointGiven());
+			}
+		}
+	}
+}
