@@ -11,6 +11,8 @@ public class Magic {
 		this.setFileName(name);
 		this.setWidth(widthParam);
 		this.setHeight(heightParam);
+		this.setCost(mpCost);
+		this.setPow(Power);
 		int []i={0};
 		this.setE(new Entity(this.getWidth(),this.getHeight(),i,fileName));
 	}

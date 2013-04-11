@@ -52,8 +52,11 @@ public class Player {
 	}
 
 	private void initSwords() {
-		// TODO Auto-generated method stub
-		
+		this.getSwords().add(new Sword("smallSword.png",1,5,8));
+		this.getSwords().add(new Sword("medSword.png",5,5,16));
+		this.getSwords().add(new Sword("iceSword.png",10,5,16));
+		this.getSwords().add(new Sword("kisameSword.png",15,5,17));
+		this.getSwords().add(new Sword("excalibur.png",15,7,19));
 	}
 
 	/**
