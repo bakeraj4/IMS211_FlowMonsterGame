@@ -22,6 +22,8 @@ public class PlayScreen extends Screen {
 	private boolean swap;
 	private GameData data;
 	
+	private String mode="sword";
+	
 	long startTime;
 	
 	int i[]={1};
@@ -94,8 +96,8 @@ public class PlayScreen extends Screen {
 		/*System.out.println(player.getPlayerE().getX()+", "
 				+player.getPlayerE().getY());*/
 		
-		
-		
+		canChangeMode();
+		System.out.println(this.getMode());
 		castSpell();
 		//sword
 		//defend
@@ -222,25 +224,24 @@ public class PlayScreen extends Screen {
 	public void castSpell(){//TODO make sure after clearing a room that the current hp and mp = the array vals
 		int cMP=this.getPlayer().getCurrentMp();
 		int costMP=this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getCost();
-		if(cMP >= costMP /*spell not on the screen*/){
+		if(cMP >= costMP /*no spell is on the screen*/){
 			
-			if(InputHandler.isPressed(KeyEvent.VK_LEFT)&&InputHandler.isPressed(KeyEvent.VK_Q)){
+			if(InputHandler.isPressed(KeyEvent.VK_LEFT)){
 				//this.getPlayer().setCurrentMp(cMP-costMP);
 				
 			}
-			else if(InputHandler.isPressed(KeyEvent.VK_UP)&&InputHandler.isPressed(KeyEvent.VK_Q)){
+			else if(InputHandler.isPressed(KeyEvent.VK_UP)){
 				//this.getPlayer().setCurrentMp(cMP-costMP);
 				
 			}
-			else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)&&InputHandler.isPressed(KeyEvent.VK_Q)){
+			else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
 				//this.getPlayer().setCurrentMp(cMP-costMP);
 				/*this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setX(this.getPlayer().getPlayerE().getX()+this.getPlayer().getWIDTH());
 				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY(this.getPlayer().getPlayerE().getY()+this.getPlayer().getHEIGHT()/2);
 				this.getPlayer().getMagicks().get(0).getE().draw(this);*/
 				
-				
 			}
-			else if(InputHandler.isPressed(KeyEvent.VK_DOWN)&&InputHandler.isPressed(KeyEvent.VK_Q)){
+			else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
 				//this.getPlayer().setCurrentMp(cMP-costMP);
 				
 			}
@@ -478,5 +479,41 @@ public class PlayScreen extends Screen {
 				this.setPointGiven(!this.isPointGiven());
 			}
 		}
+	}
+
+	public void canChangeMode(){
+		if(InputHandler.isPressed(KeyEvent.VK_Q)){
+			switchMode();			
+			while(InputHandler.isPressed(KeyEvent.VK_Q));
+		}
+	}
+	
+	public void switchMode(){
+		if(this.getMode().equals("sword")){
+			this.setMode("magic");
+		}
+		else if(this.getMode().equals("magic")){
+			this.setMode("sheild");
+		}
+		else if(this.getMode().equals("sheild")){
+			this.setMode("sword");
+		}
+		else{
+			System.out.println("ERROR SWITCH");
+		}
+	}
+	
+	/**
+	 * @return the mode
+	 */
+	public String getMode() {
+		return mode;
+	}
+
+	/**
+	 * @param mode the mode to set
+	 */
+	public void setMode(String mode) {
+		this.mode = mode;
 	}
 }
