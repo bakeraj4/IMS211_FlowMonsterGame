@@ -14,7 +14,7 @@ public class Magic {
 		this.setCost(mpCost);
 		this.setPow(Power);
 		int []i={0};
-		this.setE(new Entity(widthParam,heightParam,i,fileName));
+		this.setE(new Entity(widthParam,heightParam,i,name));
 	}
 	
 

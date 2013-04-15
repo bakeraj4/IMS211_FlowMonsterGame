@@ -68,7 +68,23 @@ public class Player {
 		this.getMagicks().add(new Magic("largeFire.png",5,12,60,60));
 		this.getMagicks().add(new Magic("xLargeFire.png",6,20,100,100));
 	}
+	
+	//TODO te selid adds to deffense, but if in use and touches oppontes acts like a block and takes no dammage
 
+	/**
+	 * This method determines the damage that the player will take from another scource. The differance between the total attackers power
+	 * and the total defense.
+	 * @param otherPower the scource's power
+	 * @return the damage taken.
+	 */
+	public int calcDamage(int otherPower){
+		int totalDef=this.getStats()[2]+this.getSheilds().get(this.getSheildNum()).getDef();
+		
+		if( otherPower-totalDef>0)
+			return otherPower-totalDef;
+		return 0;
+	}
+	
 	private void setLoc(Pair<Integer, Integer> pair) {
 		this.Loc=pair;
 	}
