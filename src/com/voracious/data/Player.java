@@ -47,7 +47,10 @@ public class Player {
 	}
 	
 	private void initSheilds() {
-		// TODO Auto-generated method stub
+		//TODO make sure the demensions are correct for the shields
+		this.getSheilds().add(new Sheild("basicSheild.png",3,4,3));
+		this.getSheilds().add(new Sheild("mediumSheild.png",7,4,6));
+		this.getSheilds().add(new Sheild("hyruleShield.png",15,8,9));
 		
 	}
 
