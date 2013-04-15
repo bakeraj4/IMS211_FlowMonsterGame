@@ -98,9 +98,17 @@ public class PlayScreen extends Screen {
 		
 		canChangeMode();
 //		System.out.println(this.getMode());
-		castSpell();
-		swingSword();
-		//defend
+		if(this.getMode().equals("magic")){
+			castSpell();
+			//TODO move existing fire balls
+		}
+		else if(this.getMode().equals("sword"))
+			swingSword();
+		else if(this.getMode().equals("sheild"))
+			defendShield();
+		else{
+			//System.out.println("Error in the tick's actions");
+		}
 		
 		//go through all of the elements at get(x).get(y) these are the monsters on that particular floor.
 		int x=this.player.getLoc().getFirst();
@@ -228,8 +236,44 @@ public class PlayScreen extends Screen {
 		this.player=tmp;
 	}
 	
-	public void swingSword(){
-		
+	public void defendShield(){//TODO will have to worry about the moving of the player w/ the shield out.
+		if(InputHandler.isPressed(KeyEvent.VK_LEFT)){
+			//add the sheild: x=player.x+player.width+sheild.width/2; y=player.y+player.height/2-sheild.height/2
+			//check for collisions
+			//remove?
+		}
+		else if(InputHandler.isPressed(KeyEvent.VK_UP)){
+			//same as above but for up, different x,y
+		}
+		else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
+			//same as above but for right, different x,y
+		}
+		else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
+			//same as above but for down, different x,y
+		}
+		else{
+			//error
+		}
+	}
+	
+	public void swingSword(){//TODO will have to worry about moving w/ the sword out
+		if(InputHandler.isPressed(KeyEvent.VK_LEFT)){
+			//add the left sword
+			//check if the sword collides with the monster(s)
+			//remove it?
+		}
+		else if(InputHandler.isPressed(KeyEvent.VK_UP)){
+			//same as above but for up
+		}
+		else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
+			//same as above but for right
+		}
+		else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
+			//same as above but for down
+		}
+		else{
+			//error
+		}
 	}
 	
 	public void castSpell(){//TODO make sure after clearing a room that the current hp and mp = the array vals, player.fullheal() in roomclearer
