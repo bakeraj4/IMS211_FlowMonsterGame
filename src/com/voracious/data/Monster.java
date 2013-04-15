@@ -16,7 +16,23 @@ public class Monster {
 		this.setE(new Entity(width,height,i,this.getFileName()));
 		this.setMovement(move);
 	}
-
+	
+	public void takeDamage(int playerTotalPower){
+		//if hp==0 then dead if less than 0 make it 0 to show dead
+		int damage=this.calcdamage(playerTotalPower);
+		int postHP=this.getHp()-damage;
+		if(postHP<0)
+			postHP=0;
+		this.setHp(postHP);
+	}
+	
+	public int calcdamage(int playerTotalPower){
+		int totalDef=this.getDef();
+		if( playerTotalPower-totalDef>0)
+			return playerTotalPower-totalDef;
+		return 0;
+	}
+	
 	/**
 	 * @return the fileName
 	 */

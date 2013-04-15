@@ -99,7 +99,7 @@ public class PlayScreen extends Screen {
 		canChangeMode();
 //		System.out.println(this.getMode());
 		castSpell();
-		//sword
+		swingSword();
 		//defend
 		
 		//go through all of the elements at get(x).get(y) these are the monsters on that particular floor.
@@ -228,7 +228,11 @@ public class PlayScreen extends Screen {
 		this.player=tmp;
 	}
 	
-	public void castSpell(){//TODO make sure after clearing a room that the current hp and mp = the array vals
+	public void swingSword(){
+		
+	}
+	
+	public void castSpell(){//TODO make sure after clearing a room that the current hp and mp = the array vals, player.fullheal() in roomclearer
 		int cMP=this.getPlayer().getCurrentMp();
 		int costMP=this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getCost();
 		if(cMP >= costMP /*&& no spell is on the screen*/){
@@ -243,13 +247,17 @@ public class PlayScreen extends Screen {
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
 				this.getPlayer().setCurrentMp(cMP-costMP);
-				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setX(this.getPlayer().getPlayerE().getX()+this.getPlayer().getWIDTH());
-				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY(this.getPlayer().getPlayerE().getY()+this.getPlayer().getHEIGHT()/2);
+				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setX(
+						this.getPlayer().getPlayerE().getX()+this.getPlayer().getWIDTH());
+				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY(
+						this.getPlayer().getPlayerE().getY()+this.getPlayer().getHEIGHT()/2);
+				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setVx(3.0);
+				//3.0 arbitraty but i want it to be faster than a monster or player
 				
-				System.out.println(this.getPlayer().getMagicks().get(0).getFileName()+
+				System.out.println(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getFileName()+
 						", x: "+this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().getX()+
 						", y: "+this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().getY());
-				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().draw(this);
+				//this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().draw(this);
 				//TODO get this to cast spells
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){

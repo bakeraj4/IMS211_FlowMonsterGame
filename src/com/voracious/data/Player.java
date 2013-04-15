@@ -69,7 +69,7 @@ public class Player {
 		this.getMagicks().add(new Magic("xLargeFire.png",6,20,100,100));
 	}
 	
-	//TODO te selid adds to deffense, but if in use and touches oppontes acts like a block and takes no dammage
+	//TODO the shield adds to deffense, but if in use and touches oppontes acts like a block and takes no dammage
 
 	/**
 	 * This method determines the damage that the player will take from another scource. The differance between the total attackers power
@@ -83,6 +83,15 @@ public class Player {
 		if( otherPower-totalDef>0)
 			return otherPower-totalDef;
 		return 0;
+	}
+	
+	public void takeDamage(int otherPower){
+		//if hp==0 then dead if less than 0 make it 0 to show dead
+		int damage=this.calcDamage(otherPower);
+		int postHP=this.getCurrentHp()-damage;
+		if(postHP<0)
+			postHP=0;
+		this.setCurrentHp(postHP);
 	}
 	
 	private void setLoc(Pair<Integer, Integer> pair) {
