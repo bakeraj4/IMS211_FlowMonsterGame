@@ -97,7 +97,7 @@ public class PlayScreen extends Screen {
 				+player.getPlayerE().getY());*/
 		
 		canChangeMode();
-		System.out.println(this.getMode());
+//		System.out.println(this.getMode());
 		castSpell();
 		//sword
 		//defend
@@ -187,8 +187,15 @@ public class PlayScreen extends Screen {
 	}
 	
 	public void changeClearDoors(){
+		shutAllDoors();
 		N_door=new Entity(22,15,i,"upN_Door.png");
         E_door=new Entity(14,17,i,"upE_Door.png");
+	}
+	
+	public void inNewRoom(){
+		shutAllDoors();
+		S_door=new Entity(22,15,i,"upS_Door.png");
+		W_door=new Entity(14,17,i,"upW_Door.png");
 	}
 	
 	public void shutAllDoors(){
@@ -224,30 +231,34 @@ public class PlayScreen extends Screen {
 	public void castSpell(){//TODO make sure after clearing a room that the current hp and mp = the array vals
 		int cMP=this.getPlayer().getCurrentMp();
 		int costMP=this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getCost();
-		if(cMP >= costMP /*no spell is on the screen*/){
+		if(cMP >= costMP /*&& no spell is on the screen*/){
 			
 			if(InputHandler.isPressed(KeyEvent.VK_LEFT)){
-				//this.getPlayer().setCurrentMp(cMP-costMP);
+				this.getPlayer().setCurrentMp(cMP-costMP);
 				
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_UP)){
-				//this.getPlayer().setCurrentMp(cMP-costMP);
+				this.getPlayer().setCurrentMp(cMP-costMP);
 				
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
-				//this.getPlayer().setCurrentMp(cMP-costMP);
-				/*this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setX(this.getPlayer().getPlayerE().getX()+this.getPlayer().getWIDTH());
+				this.getPlayer().setCurrentMp(cMP-costMP);
+				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setX(this.getPlayer().getPlayerE().getX()+this.getPlayer().getWIDTH());
 				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY(this.getPlayer().getPlayerE().getY()+this.getPlayer().getHEIGHT()/2);
-				this.getPlayer().getMagicks().get(0).getE().draw(this);*/
 				
+				System.out.println(this.getPlayer().getMagicks().get(0).getFileName()+
+						", x: "+this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().getX()+
+						", y: "+this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().getY());
+				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().draw(this);
+				//TODO get this to cast spells
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
-				//this.getPlayer().setCurrentMp(cMP-costMP);
+				this.getPlayer().setCurrentMp(cMP-costMP);
 				
 			}
 		}
 		else{
-			System.out.print("NO MP");
+			//System.out.print("NO MP");
 		}
 	}
 	
