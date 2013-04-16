@@ -5,14 +5,15 @@ import com.voracious.graphics.components.Entity;
 public class Monster {
 	private String fileName;
 	private String movement;
-	private int hp, def;
+	private int hp, def,attk;
 	private Entity E;
 	
-	public Monster(String name,int HP, int DEF,int width, int height,String move){
+	public Monster(String name,int HP, int DEF,int ATTK,int width, int height,String move){//starting def= 7
 		this.setDef(DEF);
 		this.setFileName(name);
 		this.setHp(HP);
 		int[]i={1};
+		this.setAttk(ATTK);
 		this.setE(new Entity(width,height,i,this.getFileName()));
 		this.setMovement(move);
 	}
@@ -101,6 +102,20 @@ public class Monster {
 	 */
 	public void setMovement(String movement) {
 		this.movement = movement;
+	}
+
+	/**
+	 * @return the attk
+	 */
+	public int getAttk() {
+		return attk;
+	}
+
+	/**
+	 * @param attk the attk to set
+	 */
+	public void setAttk(int attk) {
+		this.attk = attk;
 	}
 	
 }

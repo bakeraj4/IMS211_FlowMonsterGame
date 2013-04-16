@@ -46,6 +46,10 @@ public class Player {
 		this.setLoc(new Pair<Integer,Integer>(0, 0));
 	}
 	
+	public int determineScore(){
+		return 3*this.getLoc().getFirst() + this.getLoc().getSecond();
+	}
+	
 	private void initSheilds() {
 		//TODO make sure the demensions are correct for the shields
 		this.getSheilds().add(new Sheild("basicSheild.png",3,4,3));
@@ -94,6 +98,8 @@ public class Player {
 		int postHP=this.getCurrentHp()-damage;
 		if(postHP<0)
 			postHP=0;
+		
+		System.out.println("posthp: "+postHP);
 		this.setCurrentHp(postHP);
 	}
 	

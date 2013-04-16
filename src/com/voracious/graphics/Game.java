@@ -115,6 +115,13 @@ public class Game extends Canvas implements Runnable {
             if(playS.getData().getComplete()[playS.getPlayer().getLoc().getFirst()][playS.getPlayer().getLoc().getSecond()]){//check if the room has been cleared
             	playS.changeClearDoors();            	
             }
+            
+            if(playS.getPlayer().getCurrentHp()<=0){
+            	//this.stop();
+            	//TODO find a better kill screen than stopping the game
+            }
+            
+            
             //else if room cleared is false but have contact with the prev dooor (need a boolean here)
             	//bottom doors open
             /*else{

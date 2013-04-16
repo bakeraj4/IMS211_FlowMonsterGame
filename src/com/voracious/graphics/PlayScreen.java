@@ -115,8 +115,6 @@ public class PlayScreen extends Screen {
 		int y=this.player.getLoc().getSecond();
 		moveMonsters(x,y);
 		
-		characterHitTest();
-		
 		
 		openPauseMenu();
 		
@@ -338,14 +336,16 @@ public class PlayScreen extends Screen {
 		else{
 			player.getPlayerE().setVy(0);
 		}
+
+		characterHitTest();
 	}
 	
 	private void openPauseMenu() {
 		if(InputHandler.isPressed(KeyEvent.VK_ESCAPE)){
 			this.changeSwap();			
 //these next two lines are kill lines to test the opening of the doors
-/*			if(this.getData().getMonsters().get(0).get(0).size()!=0)
-				this.getData().getMonsters().get(0).get(0).get(0).setHp(0);*/
+			if(this.getData().getMonsters().get(0).get(0).size()!=0)
+				this.getData().getMonsters().get(0).get(0).get(0).setHp(0);
 		}
 		
 	}
@@ -356,35 +356,41 @@ public class PlayScreen extends Screen {
 	}
 	
 	private void characterHitTest() {
-		if(player.getPlayerE().hitTest(E_door)||player.getPlayerE().hitTest(W_door)
-				||player.getPlayerE().hitTest(S_door)||player.getPlayerE().hitTest(N_door)){
-			if(player.getPlayerE().hitTest(N_door)&& this.N_door.getFileName().equals("upN_Door.png")){
-				//System.out.println("YUP!");
-				//move the player up to the next room
-				this.getPlayer().getPlayerE().setY(121);//as of now the player must slow move up by lightly tapping up and to stay incontact w/ the door
-				this.zeroVelocity(this.getPlayer().getPlayerE());
-				this.N_door=new Entity(22,15,i,"downN_door.png");//TODO it don't change
-				//close the new n.door
-				//set the y to value so touching the Sdoor and if up then close the door. if the player moves down on the sdoor and not shut move it back down
-			}
-			else if(player.getPlayerE().hitTest(E_door)&& this.E_door.getFileName().equals("upE_Door.png")){
-				//System.out.println("YUP!");
-				//move the player up to the next room
-				this.getPlayer().getPlayerE().setX(16);//as of now the player must slow move up by lightly tapping up and to stay incontact w/ the door
-				this.zeroVelocity(this.getPlayer().getPlayerE());
-				this.E_door=new Entity(14,17,i,"downE_door.png");//TODO it don't change
-				//close the new e.door
-				//set the y to value so touching the Sdoor and if up then close the door. if the player moves down on the sdoor and not shut move it back down
-			}
-			else{
-				
-				//System.out.println("Nope!");
-			}
-			/*if(player.getPlayerE().hitTest(S_door))
-				System.out.println("South side!");*/
+		if(player.getPlayerE().hitTest(N_door)&& this.N_door.getFileName().equals("upN_Door.png")){
+			//move the player up to the next room
+			this.getPlayer().getPlayerE().setY(121);//as of now the player must slow move up by lightly tapping up and to stay incontact w/ the door
+			this.zeroVelocity(this.getPlayer().getPlayerE());
+			//this.inNewRoom();
+
+			//set the y to value so touching the Sdoor and if up then close the door. if the player moves down on the sdoor and not shut move it back down
 		}
+		else if(player.getPlayerE().hitTest(E_door)&& this.E_door.getFileName().equals("upE_Door.png")){
+			//move the player up to the next room
+			this.getPlayer().getPlayerE().setX(16);//as of now the player must slow move up by lightly tapping up and to stay incontact w/ the door
+			this.zeroVelocity(this.getPlayer().getPlayerE());
+			//this.inNewRoom();
+			//set the y to value so touching the Wdoor and if up then close the door. if the player moves down on the sdoor and not shut move it back down
+		}
+		else{
+
+			//System.out.println("Nope!");
+		}
+		
+		
+		//TODO the returning doorways
+		
+		int x=this.getPlayer().getLoc().getFirst();
+		int y=this.getPlayer().getLoc().getSecond();
+		for(int i=0;i<this.getData().getMonsters().get(x).get(y).size();i++){//goes through all of the monsters in the room
+			if(this.getPlayer().getPlayerE().hitTest(this.getData().getMonsters().get(x).get(y).get(i).getE())){//player is in contact with a monster
+				this.getPlayer().takeDamage(this.getData().getMonsters().get(x).get(y).get(i).getAttk());
+				System.out.println("taking damage"+this.getPlayer().getCurrentHp());
+			}
+		}
+		
+		
 	}
-	
+
 	private void moveMonsters(int x, int y) {
 		for(int i=0;i<this.getData().getMonsters().get(x).get(y).size();i++){
 			Monster tmp=this.getData().getMonsters().get(x).get(y).get(i);
