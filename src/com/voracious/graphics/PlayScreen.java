@@ -23,6 +23,8 @@ public class PlayScreen extends Screen {
 	private boolean swap;
 	private GameData data;
 	
+	boolean displaySpell=false;
+	
 	private String mode="sword";
 	
 	long startTime;
@@ -77,6 +79,10 @@ public class PlayScreen extends Screen {
 			this.getData().getMonsters().get(x).get(y).get(i).getE().draw(this);
 		}
 		
+		if(this.displaySpell){
+			this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().draw(this);
+		}
+		
 	}
 	
 	@Override
@@ -95,11 +101,13 @@ public class PlayScreen extends Screen {
 		/*System.out.println(player.getPlayerE().getX()+", "
 				+player.getPlayerE().getY());*/
 		
+
+		//TODO move existing fire balls
+		
 		canChangeMode();
 //		System.out.println(this.getMode());
 		if(this.getMode().equals("magic")){
 			castSpell();
-			//TODO move existing fire balls
 		}
 		else if(this.getMode().equals("sword"))
 			swingSword();
@@ -276,8 +284,8 @@ public class PlayScreen extends Screen {
 	public void castSpell(){//TODO make sure after clearing a room that the current hp and mp = the array vals, player.fullheal() in roomclearer
 		int cMP=this.getPlayer().getCurrentMp();
 		int costMP=this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getCost();
-		if(cMP >= costMP /*&& no spell is on the screen*/){
-			
+		if(cMP >= costMP && !displaySpell){
+			int magNum=this.getPlayer().getMagickNum();
 			if(InputHandler.isPressed(KeyEvent.VK_LEFT)){
 				this.getPlayer().setCurrentMp(cMP-costMP);
 				
@@ -288,23 +296,35 @@ public class PlayScreen extends Screen {
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
 				this.getPlayer().setCurrentMp(cMP-costMP);
-				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setX(
+				this.getPlayer().getMagicks().get(magNum).getE().setX(
 						this.getPlayer().getPlayerE().getX()+this.getPlayer().getWIDTH());
 				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY(
 						this.getPlayer().getPlayerE().getY()+this.getPlayer().getHEIGHT()/2);
-				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setVx(3.0);
+				this.getPlayer().getMagicks().get(magNum).getE().setVx(3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 				
-				System.out.println(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getFileName()+
-						", x: "+this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().getX()+
-						", y: "+this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().getY());
-				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().draw(this);
+				System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
+						", x: "+this.getPlayer().getMagicks().get(magNum).getE().getX()+
+						", y: "+this.getPlayer().getMagicks().get(magNum).getE().getY());
+				this.displaySpell=true;
+				//this.getPlayer().getMagicks().get(magNum).getE().draw(this);
 				//TODO get this to cast spells
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
 				this.getPlayer().setCurrentMp(cMP-costMP);
 				
 			}
+		}
+		else if(displaySpell){
+			//if (hit test monsters
+				//give damage
+				//display false
+				//set the loc to null
+			//else if(check walls
+				//display is false
+				//set the loc to null
+			//else
+				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().tick();//tick it
 		}
 		else{
 			//System.out.println("NO MP");
