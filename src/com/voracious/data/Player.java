@@ -99,7 +99,6 @@ public class Player {
 		if(postHP<0)
 			postHP=0;
 		
-		System.out.println("posthp: "+postHP);
 		this.setCurrentHp(postHP);
 	}
 	

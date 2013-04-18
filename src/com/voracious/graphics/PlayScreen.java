@@ -344,7 +344,7 @@ public class PlayScreen extends Screen {
 		if(InputHandler.isPressed(KeyEvent.VK_ESCAPE)){
 			this.changeSwap();			
 //these next two lines are kill lines to test the opening of the doors
-			if(this.getData().getMonsters().get(0).get(0).size()!=0)
+		if(this.getData().getMonsters().get(0).get(0).size()!=0)
 				this.getData().getMonsters().get(0).get(0).get(0).setHp(0);
 		}
 		
@@ -382,10 +382,16 @@ public class PlayScreen extends Screen {
 		int x=this.getPlayer().getLoc().getFirst();
 		int y=this.getPlayer().getLoc().getSecond();
 		for(int i=0;i<this.getData().getMonsters().get(x).get(y).size();i++){//goes through all of the monsters in the room
-			if(this.getPlayer().getPlayerE().hitTest(this.getData().getMonsters().get(x).get(y).get(i).getE())){//player is in contact with a monster
+			Entity temp=this.getData().getMonsters().get(x).get(y).get(i).getE();
+			if(this.getPlayer().getPlayerE().hitTest(temp)){//player is in contact with a monster
 				this.getPlayer().takeDamage(this.getData().getMonsters().get(x).get(y).get(i).getAttk());
-				System.out.println("taking damage"+this.getPlayer().getCurrentHp());
 			}
+			/*
+			 else if(sheild.hitTest(monsetr)){
+			 	set the monster's velocity to 3 but in opposite direction. if hit with vx=1,vy=-1 then vx=-3,vy=3
+			 	call the monster's tick
+			 }
+			 */
 		}
 		
 		
