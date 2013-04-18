@@ -3,6 +3,7 @@ package com.voracious.graphics;
 import java.awt.event.KeyEvent;
 
 import com.voracious.data.GameData;
+import com.voracious.data.Magic;
 import com.voracious.data.Monster;
 import com.voracious.data.Player;
 import com.voracious.graphics.components.Entity;
@@ -76,8 +77,6 @@ public class PlayScreen extends Screen {
 			this.getData().getMonsters().get(x).get(y).get(i).getE().draw(this);
 		}
 		
-		
-	    
 	}
 	
 	@Override
@@ -299,7 +298,7 @@ public class PlayScreen extends Screen {
 				System.out.println(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getFileName()+
 						", x: "+this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().getX()+
 						", y: "+this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().getY());
-				//this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().draw(this);
+				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().draw(this);
 				//TODO get this to cast spells
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
@@ -308,7 +307,7 @@ public class PlayScreen extends Screen {
 			}
 		}
 		else{
-			//System.out.print("NO MP");
+			//System.out.println("NO MP");
 		}
 	}
 	

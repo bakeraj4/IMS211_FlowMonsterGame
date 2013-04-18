@@ -13,7 +13,7 @@ public class Magic {
 		this.setHeight(heightParam);
 		this.setCost(mpCost);
 		this.setPow(Power);
-		int []i={0};
+		int []i={1};//theres the problem has to be 1 or more
 		this.setE(new Entity(widthParam,heightParam,i,name));
 	}
 	
