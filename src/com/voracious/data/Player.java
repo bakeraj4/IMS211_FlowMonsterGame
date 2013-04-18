@@ -39,7 +39,7 @@ public class Player {
 		this.initMagicks();
 		this.initSwords();
 		this.initSheilds();
-		int s[]={10,3,4,1};
+		int s[]={10,3,4,10};
 		this.setStats(s);
 		this.setCurrentHp(10);
 		this.setCurrentMp(1);

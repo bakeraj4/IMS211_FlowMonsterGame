@@ -16,7 +16,7 @@ public class GameData {
 				this.getMonsters().get(i).add(new ArrayList<Monster>());
 			}
 		}
-		this.getMonsters().get(0).get(0).add(new Monster("babyDragon.png", 10, 10, 7, 80, 60,"Close"));
+		this.getMonsters().get(0).get(0).add(new Monster("babyDragon.png", 10, 3, 7, 80, 60,"Close"));
 		//it's set to 7 b/c same def as player initaly so player can learn in starting room
 		this.getMonsters().get(0).get(0).get(0).getE().setX(90);
 		this.getMonsters().get(0).get(0).get(0).getE().setY(60);

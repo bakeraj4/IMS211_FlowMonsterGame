@@ -24,6 +24,7 @@ public class Monster {
 		int postHP=this.getHp()-damage;
 		if(postHP<0)
 			postHP=0;
+		//System.out.println(this.getHp()+", "+postHP);
 		this.setHp(postHP);
 	}
 	

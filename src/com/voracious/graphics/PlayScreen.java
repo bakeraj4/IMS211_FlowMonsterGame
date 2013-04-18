@@ -316,13 +316,18 @@ public class PlayScreen extends Screen {
 			}
 		}
 		else if(displaySpell){
-			//if (hit test monsters
-				//give damage
-				//display false
-				//set the loc to null
-			//else if(check walls
-				//display is false
-				//set the loc to null
+			{//if hit any of the currently displayed monsters
+				for(int i=0;i<this.getData().getMonsters().get(this.getPlayer().getLoc().getFirst()).get(this.getPlayer().getLoc().getSecond()).size();i++){
+					Monster temp=this.getData().getMonsters().get(this.getPlayer().getLoc().getFirst()).get(this.getPlayer().getLoc().getSecond()).get(i);
+					if(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().hitTest(temp.getE())){
+						temp.takeDamage(this.getPlayer().getMagicks().get(this.player.getMagickNum()).getPow()+this.getPlayer().getStats()[1]);
+						this.removeSpell();
+					}
+				
+				}
+			}
+			// if(check walls
+				//removeSpell();
 			//else
 				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().tick();//tick it
 		}
@@ -330,6 +335,14 @@ public class PlayScreen extends Screen {
 			//System.out.println("NO MP");
 		}
 	}
+	
+	public void removeSpell(){
+		this.displaySpell=false;
+		zeroVelocity(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE());
+		//this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setX((Double) null);
+		//this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY((Double) null);
+	}
+	
 	
 	public void characterMover(){
 		if((InputHandler.isPressed(KeyEvent.VK_D) /*||
