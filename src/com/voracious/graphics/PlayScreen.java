@@ -288,10 +288,32 @@ public class PlayScreen extends Screen {
 			int magNum=this.getPlayer().getMagickNum();
 			if(InputHandler.isPressed(KeyEvent.VK_LEFT)){
 				this.getPlayer().setCurrentMp(cMP-costMP);
+				this.getPlayer().getMagicks().get(magNum).getE().setX(
+						this.getPlayer().getPlayerE().getX());
+				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY(
+						this.getPlayer().getPlayerE().getY()+this.getPlayer().getHEIGHT()/2);
+				this.getPlayer().getMagicks().get(magNum).getE().setVx(-3.0);
+				//3.0 arbitraty but i want it to be faster than a monster or player
+
+				System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
+						", x: "+this.getPlayer().getMagicks().get(magNum).getE().getX()+
+						", y: "+this.getPlayer().getMagicks().get(magNum).getE().getY());
+				this.displaySpell=true;
 				
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_UP)){
 				this.getPlayer().setCurrentMp(cMP-costMP);
+				this.getPlayer().getMagicks().get(magNum).getE().setX(
+						this.getPlayer().getPlayerE().getX()+(this.getPlayer().getWIDTH()/2));
+				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY(
+						this.getPlayer().getPlayerE().getY());
+				this.getPlayer().getMagicks().get(magNum).getE().setVy(-3.0);
+				//3.0 arbitraty but i want it to be faster than a monster or player
+
+				System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
+						", x: "+this.getPlayer().getMagicks().get(magNum).getE().getX()+
+						", y: "+this.getPlayer().getMagicks().get(magNum).getE().getY());
+				this.displaySpell=true;
 				
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
@@ -307,12 +329,20 @@ public class PlayScreen extends Screen {
 						", x: "+this.getPlayer().getMagicks().get(magNum).getE().getX()+
 						", y: "+this.getPlayer().getMagicks().get(magNum).getE().getY());
 				this.displaySpell=true;
-				//this.getPlayer().getMagicks().get(magNum).getE().draw(this);
-				//TODO get this to cast spells
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
 				this.getPlayer().setCurrentMp(cMP-costMP);
-				
+				this.getPlayer().getMagicks().get(magNum).getE().setX(
+						this.getPlayer().getPlayerE().getX()+(this.getPlayer().getWIDTH()/2));
+				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY(
+						this.getPlayer().getPlayerE().getY()+this.getPlayer().getHEIGHT());
+				this.getPlayer().getMagicks().get(magNum).getE().setVy(3.0);
+				//3.0 arbitraty but i want it to be faster than a monster or player
+
+				System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
+						", x: "+this.getPlayer().getMagicks().get(magNum).getE().getX()+
+						", y: "+this.getPlayer().getMagicks().get(magNum).getE().getY());
+				this.displaySpell=true;
 			}
 		}
 		else if(displaySpell){
@@ -326,14 +356,31 @@ public class PlayScreen extends Screen {
 				
 				}
 			}
-			// if(check walls
-				//removeSpell();
-			//else
+			if(this.canMove(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE()))//check walls
+				removeSpell();
+			else
 				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().tick();//tick it
 		}
 		else{
 			//System.out.println("NO MP");
 		}
+	}
+	
+	public boolean canMove(Entity E){
+		if(E.getX()+(E.getWidth()/2)+E.getVx()>=171){
+			return false;
+		}
+		else if(E.getX()+(E.getWidth()/2)-E.getVx()<=36){
+			return false;
+		}
+
+		if(E.getY()+(E.getHeight()/2)-E.getVy()<=17){//17
+			return false;
+		}
+		else if(E.getY()+(E.getHeight()/2)+E.getVy()>=121){//121
+			return false;
+		}
+		return true;
 	}
 	
 	public void removeSpell(){
