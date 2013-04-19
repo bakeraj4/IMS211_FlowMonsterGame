@@ -24,6 +24,7 @@ public class PlayScreen extends Screen {
 	private GameData data;
 	
 	boolean displaySpell=false;
+	boolean displaySword=false;
 	
 	private String mode="sword";
 	
@@ -81,6 +82,9 @@ public class PlayScreen extends Screen {
 		
 		if(this.displaySpell){
 			this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().draw(this);
+		}
+		if(this.displaySword){
+			this.getPlayer().getSwords().get(this.getPlayer().getSwordNum()).getE().draw(this);
 		}
 		
 	}
@@ -262,13 +266,18 @@ public class PlayScreen extends Screen {
 	}
 	
 	public void swingSword(){//TODO will have to worry about moving w/ the sword out
+		int swordnum=this.getPlayer().getSwordNum();
+		double playerX=this.getPlayer().getPlayerE().getX();
+		double playerY=this.getPlayer().getPlayerE().getY();
 		if(InputHandler.isPressed(KeyEvent.VK_LEFT)){
 			//add the left sword
 			//check if the sword collides with the monster(s)
 			//remove it?
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_UP)){
-			//same as above but for up
+			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+(this.getPlayer().getWIDTH()/2));
+			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY-(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2));
+			this.displaySword=true;
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
 			//same as above but for right
@@ -277,7 +286,8 @@ public class PlayScreen extends Screen {
 			//same as above but for down
 		}
 		else{
-			//error
+			this.displaySword=false;
+			//set remove teh sword from the screen
 		}
 	}
 	
