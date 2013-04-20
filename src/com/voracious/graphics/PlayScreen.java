@@ -6,6 +6,8 @@ import com.voracious.data.GameData;
 import com.voracious.data.Magic;
 import com.voracious.data.Monster;
 import com.voracious.data.Player;
+import com.voracious.data.Sheild;
+import com.voracious.data.Sword;
 import com.voracious.graphics.components.Entity;
 import com.voracious.graphics.components.Screen;
 import com.voracious.graphics.components.Sprite;
@@ -23,8 +25,9 @@ public class PlayScreen extends Screen {
 	private boolean swap;
 	private GameData data;
 	
-	boolean displaySpell=false;
-	boolean displaySword=false;
+	private boolean displaySpell=false;
+	private boolean displaySword=false;
+	private boolean displaySheild=false;
 	
 	private String mode="sword";
 	
@@ -78,6 +81,9 @@ public class PlayScreen extends Screen {
 	    }
 	    if(this.displaySword){
 	    	this.getPlayer().getSwords().get(this.getPlayer().getSwordNum()).getE().draw(this);
+	    }
+	    if(this.displaySheild){
+	    	this.getPlayer().getSheilds().get(this.getPlayer().getSwordNum()).getE().draw(this);
 	    }
 	    
 	    int x=this.player.getLoc().getFirst();
@@ -245,23 +251,32 @@ public class PlayScreen extends Screen {
 		this.player=tmp;
 	}
 	
-	public void defendShield(){//TODO will have to worry about the moving of the player w/ the shield out.
+	public void defendShield(){
+		Sheild tmp=this.getPlayer().getSheilds().get(this.getPlayer().getSheildNum());
+		double playerX=this.getPlayer().getPlayerE().getX();
+		double playerY=this.getPlayer().getPlayerE().getY();
 		if(InputHandler.isPressed(KeyEvent.VK_LEFT)){
-			//add the sheild: x=player.x+player.width+sheild.width/2; y=player.y+player.height/2-sheild.height/2
-			//check for collisions
-			//remove?
+			tmp.getE().setX(playerX-(tmp.getWidth()/2));
+			tmp.getE().setY(playerY+(this.getPlayer().getHEIGHT()/2));
+			this.displaySheild=true;
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_UP)){
-			//same as above but for up, different x,y
+			tmp.getE().setX(playerX+tmp.getE().getWidth());
+			tmp.getE().setY(playerY-(tmp.getE().getHeight()/2));
+			this.displaySheild=true;
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
-			//same as above but for right, different x,y
+			tmp.getE().setX(playerX+this.getPlayer().getWIDTH());
+			tmp.getE().setY(playerY+(this.getPlayer().getHEIGHT()/2));
+			this.displaySheild=true;
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
-			//same as above but for down, different x,y
+			tmp.getE().setX(playerX+tmp.getE().getWidth());
+			tmp.getE().setY(playerY+this.getPlayer().getPlayerE().getHeight());
+			this.displaySheild=true;
 		}
 		else{
-			//error
+			this.displaySheild=false;
 		}
 	}
 	
@@ -289,8 +304,7 @@ public class PlayScreen extends Screen {
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
 			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+(this.getPlayer().getWIDTH()/2));
-			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY+(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2)
-					+this.getPlayer().getSwords().get(swordnum).getE().getHeight());
+			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY+this.getPlayer().getSwords().get(swordnum).getE().getHeight());
 			this.displaySword=true;
 			this.hitTestSword(swordnum);
 		}
