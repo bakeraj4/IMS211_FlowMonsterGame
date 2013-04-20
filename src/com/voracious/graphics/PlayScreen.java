@@ -280,6 +280,20 @@ public class PlayScreen extends Screen {
 		}
 	}
 	
+	public void hitTestSheild(Sheild protector){//TODO START HERE
+		Monster temp;
+		int playerX=this.getPlayer().getLoc().getFirst();
+		int playerY=this.getPlayer().getLoc().getSecond();
+		for(int i=0;i<this.getData().getMonsters().get(playerX).get(playerY).size();i++){
+			temp=this.getData().getMonsters().get(playerX).get(playerY).get(i);
+			if(protector.getE().hitTest(temp.getE())){
+				System.out.println("sh hit");
+				creatureReversal(temp);
+			}
+		
+		}
+	}
+	
 	public void swingSword(){
 		int swordnum=this.getPlayer().getSwordNum();
 		double playerX=this.getPlayer().getPlayerE().getX();
