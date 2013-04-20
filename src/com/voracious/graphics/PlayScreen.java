@@ -265,7 +265,7 @@ public class PlayScreen extends Screen {
 		}
 	}
 	
-	public void swingSword(){//TODO will have to worry about moving w/ the sword out
+	public void swingSword(){
 		int swordnum=this.getPlayer().getSwordNum();
 		double playerX=this.getPlayer().getPlayerE().getX();
 		double playerY=this.getPlayer().getPlayerE().getY();
@@ -273,27 +273,52 @@ public class PlayScreen extends Screen {
 			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX-(this.getPlayer().getSwords().get(swordnum).getE().getWidth()/2));
 			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY+(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2));
 			this.displaySword=true;
+			this.hitTestSword(swordnum);
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_UP)){
 			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+(this.getPlayer().getWIDTH()/2));
 			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY-(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2));
 			this.displaySword=true;
+			this.hitTestSword(swordnum);
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
 			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+this.getPlayer().getWIDTH());
 			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY+(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2));
 			this.displaySword=true;
+			this.hitTestSword(swordnum);
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
 			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+(this.getPlayer().getWIDTH()/2));
 			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY+(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2)
 					+this.getPlayer().getSwords().get(swordnum).getE().getHeight());
 			this.displaySword=true;
+			this.hitTestSword(swordnum);
 		}
 		else{
 			this.displaySword=false;
-			//set remove teh sword from the screen
 		}
+	}
+	
+	public void hitTestSword(int swordIndex){
+		Monster temp;
+		int playerX=this.getPlayer().getLoc().getFirst();
+		int playerY=this.getPlayer().getLoc().getSecond();
+		for(int i=0;i<this.getData().getMonsters().get(playerX).get(playerY).size();i++){
+			temp=this.getData().getMonsters().get(playerX).get(playerY).get(i);
+			if(this.getPlayer().getSwords().get(swordIndex).getE().hitTest(temp.getE())){
+				System.out.println("s hit");
+				temp.takeDamage(this.getPlayer().getSwords().get(swordIndex).getPower()+this.getPlayer().getStats()[1]);
+				creatureReversal(temp);
+			}
+		
+		}
+	}
+	
+	public void creatureReversal(Monster monst){
+		monst.getE().setVx(monst.getE().getVx()*-2);
+		monst.getE().setVy(monst.getE().getVy()*-2);
+		for(int i=0;i<10;i++)//Maybe 5 times
+			monst.getE().tick();
 	}
 	
 	public void castSpell(){//TODO make sure after clearing a room that the current hp and mp = the array vals, player.fullheal() in roomclearer
