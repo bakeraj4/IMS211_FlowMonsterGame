@@ -44,11 +44,13 @@ public class Game extends Canvas implements Runnable {
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private static boolean running = false;
     private static boolean paused = false;
-    
+    private boolean displayOver=false;
+    private boolean changed=false;
     
 //aaron's vars
     PlayScreen playS;
     PauseScreen pauseS;
+    GameOverScreen overS;
     
     public Game() {
         init();
@@ -85,7 +87,8 @@ public class Game extends Canvas implements Runnable {
         
         playS=new PlayScreen(WIDTH, HEIGHT);
         pauseS= new PauseScreen(WIDTH,HEIGHT,playS.getPlayer());
-
+    	overS=new GameOverScreen(this.WIDTH, this.HEIGHT, this.playS.getPlayer());
+    	
     	Game.switchScreen(playS);
            
     }
@@ -117,8 +120,14 @@ public class Game extends Canvas implements Runnable {
             }
             
             if(playS.getPlayer().getCurrentHp()<=0){
-            	//this.stop();
-            	//TODO find a better kill screen than stopping the game
+            	switchScreen(overS);
+            	if(displayOver){
+                	overS.onDisplay();
+                	displayOver=false;
+                	changed=true;
+            	}
+            	if(!this.changed)
+            		this.displayOver=true;
             }
             
             

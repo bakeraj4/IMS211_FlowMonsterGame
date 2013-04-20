@@ -8,27 +8,48 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import com.voracious.data.Pair;
 import com.voracious.data.Player;
 import com.voracious.graphics.components.Screen;
+import com.voracious.graphics.components.Sprite;
 
 public class GameOverScreen extends Screen {
 	private ArrayList<Pair<String,Integer>> highScores;//will be in a bin file
+	private Sprite s;
+	private Player p;
 	public GameOverScreen(int width, int height,Player play) {
 		super(width, height);
-		//draw the back ground image
-		//inits array list frombin file
-		//add the player's score and get the name
-			//sorted by high to low scoress
-		//resaves the bin file
+		s=new Sprite(200,150,"gameOver.png");
+		s.draw(this, -1, -1);
+		p=play;
+	}
+	
+	public void onDisplay(){
+		String name=(String)JOptionPane.showInputDialog(this, "Type name or username.");
+		
+		this.readScores();
+		System.out.println(highScores.size());
+		int score=p.determineScore();
+		int i=0;
+		Pair<String, Integer> tmp = new Pair<String,Integer>(name,score);
+		if(highScores.size()!=0){
+			while(score<=highScores.get(i).getSecond()){
+				System.out.println(highScores.get(i).getFirst()+", "+highScores.get(i).getSecond());
+				i++;
+			}
+		}
+		highScores.add(i, tmp);
+		this.writeScores();
 		//shows the top 10 scores
 	}
 	
-	
+	@SuppressWarnings("unchecked")
 	public void readScores(){
 		highScores=new ArrayList<Pair<String,Integer>>(); 
 		try {
-			ObjectInputStream in =new ObjectInputStream(new FileInputStream("/scores.bin"));
+			ObjectInputStream in =new ObjectInputStream(new FileInputStream("scores.bin"));
 			Pair<String,Integer> obj=(Pair<String, Integer>) in.readObject();
 			while((obj=(Pair<String, Integer>) in.readObject())!=null){
 				highScores.add(obj);
@@ -49,7 +70,7 @@ public class GameOverScreen extends Screen {
 	
 	public void writeScores(){
 		try {
-			ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream("/scores.bin"));
+			ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream("scores.bin"));
 			for(int i=0;i<highScores.size();i++){
 				out.writeObject(highScores.get(i));
 			}
@@ -62,5 +83,21 @@ public class GameOverScreen extends Screen {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void start(){
+		
+	}
+	
+	public void stop(){
+		
+	}
+	
+	public void tick(){
+		
+	}
+	
+	public void render(){
+		
 	}
 }

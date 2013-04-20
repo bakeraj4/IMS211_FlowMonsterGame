@@ -1,7 +1,9 @@
 package com.voracious.data;
 
+import java.io.Serializable;
 
-public class Pair<F, S> {
+
+public class Pair<F, S> implements Serializable {
     private F first;
     private S second;
 

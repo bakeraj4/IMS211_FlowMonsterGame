@@ -507,7 +507,8 @@ public class PlayScreen extends Screen {
 			//move the player up to the next room
 			this.getPlayer().getPlayerE().setY(121);//as of now the player must slow move up by lightly tapping up and to stay incontact w/ the door
 			this.zeroVelocity(this.getPlayer().getPlayerE());
-			//this.inNewRoom();
+			this.getPlayer().getLoc().setFirst(this.getPlayer().getLoc().getFirst()+1);
+			this.inNewRoom();
 
 			//set the y to value so touching the Sdoor and if up then close the door. if the player moves down on the sdoor and not shut move it back down
 		}
@@ -515,7 +516,8 @@ public class PlayScreen extends Screen {
 			//move the player up to the next room
 			this.getPlayer().getPlayerE().setX(16);//as of now the player must slow move up by lightly tapping up and to stay incontact w/ the door
 			this.zeroVelocity(this.getPlayer().getPlayerE());
-			//this.inNewRoom();
+			this.getPlayer().getLoc().setSecond(this.getPlayer().getLoc().getSecond()+1);
+			this.inNewRoom();
 			//set the y to value so touching the Wdoor and if up then close the door. if the player moves down on the sdoor and not shut move it back down
 		}
 		else{
@@ -531,7 +533,7 @@ public class PlayScreen extends Screen {
 		for(int i=0;i<this.getData().getMonsters().get(x).get(y).size();i++){//goes through all of the monsters in the room
 			Entity temp=this.getData().getMonsters().get(x).get(y).get(i).getE();
 			if(this.getPlayer().getPlayerE().hitTest(temp)){//player is in contact with a monster
-				this.getPlayer().takeDamage(this.getData().getMonsters().get(x).get(y).get(i).getAttk());
+				this.getPlayer().takeDamage(this.getData().getMonsters().get(x).get(y).get(i).getAttk()/*+100*/);
 			}
 			/*
 			 else if(sheild.hitTest(monsetr)){
@@ -622,6 +624,20 @@ public class PlayScreen extends Screen {
 		}
 		else{//error
 			System.out.println("ERROR RAND NOT IN [1,4]");
+		}
+		if(!this.canMove(tmp.getE())){
+			if(tmp.getE().getY()<=17){
+				tmp.getE().setVy(1.0);
+			}
+			else if(tmp.getE().getY()>=121){
+				tmp.getE().setVy(-1.0);				
+			}
+			if(tmp.getE().getX()<=36){
+				tmp.getE().setVx(1.0);
+			}
+			else if(tmp.getE().getX()>=171){
+				tmp.getE().setVx(-1.0);
+			}
 		}
 		
 	}

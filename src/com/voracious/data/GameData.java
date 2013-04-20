@@ -17,15 +17,20 @@ public class GameData {
 			}
 		}
 		this.getMonsters().get(0).get(0).add(new Monster("babyDragonV2.png", 10, 3, 7, 55, 49,"Close"));
-		//it's set to 7 b/c same def as player initaly so player can learn in starting room
 		this.getMonsters().get(0).get(0).get(0).getE().setX(90);
 		this.getMonsters().get(0).get(0).get(0).getE().setY(60);
-		//this.getMonsters().get(0).get(0).get(0).getE().setY(121-(((this.getMonsters().get(0).get(0).get(0).getE().getHeight())/2)));
-		//this.getMonsters().get(0).get(0).get(0).getE().setY(17-((this.getMonsters().get(0).get(0).get(0).getE().getHeight())/2));
 		
 		
 		
 		this.getMonsters().get(1).get(0).add(new Monster("bat.png",10,0,1,10,7,"Rand"));
+		this.getMonsters().get(1).get(0).get(0).getE().setX(90);
+		this.getMonsters().get(1).get(0).get(0).getE().setY(60);
+		this.getMonsters().get(1).get(0).add(new Monster("bat.png",10,0,1,10,7,"Rand"));
+		this.getMonsters().get(1).get(0).get(0).getE().setX(40);
+		this.getMonsters().get(1).get(0).get(0).getE().setY(70);
+		this.getMonsters().get(1).get(0).add(new Monster("bat.png",10,0,1,10,7,"Rand"));
+		this.getMonsters().get(1).get(0).get(0).getE().setX(100);
+		this.getMonsters().get(1).get(0).get(0).getE().setY(90);
 		
 		//Fig8Knot
 		
