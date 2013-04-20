@@ -72,6 +72,14 @@ public class PlayScreen extends Screen {
 	    E_door.setY(67);
 	    E_door.draw(this);
 
+	    
+	    if(this.displaySpell){
+	    	this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().draw(this);
+	    }
+	    if(this.displaySword){
+	    	this.getPlayer().getSwords().get(this.getPlayer().getSwordNum()).getE().draw(this);
+	    }
+	    
 	    int x=this.player.getLoc().getFirst();
 		int y=this.player.getLoc().getSecond();
 		for(int i=0;i<this.getData().getMonsters().get(x).get(y).size();i++){
@@ -79,14 +87,6 @@ public class PlayScreen extends Screen {
 			//this.getData().getMonsters().get(x).get(y).get(i).getE().setX(100);
 			this.getData().getMonsters().get(x).get(y).get(i).getE().draw(this);
 		}
-		
-		if(this.displaySpell){
-			this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().draw(this);
-		}
-		if(this.displaySword){
-			this.getPlayer().getSwords().get(this.getPlayer().getSwordNum()).getE().draw(this);
-		}
-		
 	}
 	
 	@Override
@@ -270,9 +270,9 @@ public class PlayScreen extends Screen {
 		double playerX=this.getPlayer().getPlayerE().getX();
 		double playerY=this.getPlayer().getPlayerE().getY();
 		if(InputHandler.isPressed(KeyEvent.VK_LEFT)){
-			//add the left sword
-			//check if the sword collides with the monster(s)
-			//remove it?
+			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX-(this.getPlayer().getSwords().get(swordnum).getE().getWidth()/2));
+			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY+(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2));
+			this.displaySword=true;
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_UP)){
 			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+(this.getPlayer().getWIDTH()/2));
@@ -280,10 +280,15 @@ public class PlayScreen extends Screen {
 			this.displaySword=true;
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
-			//same as above but for right
+			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+this.getPlayer().getWIDTH());
+			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY+(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2));
+			this.displaySword=true;
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
-			//same as above but for down
+			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+(this.getPlayer().getWIDTH()/2));
+			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY+(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2)
+					+this.getPlayer().getSwords().get(swordnum).getE().getHeight());
+			this.displaySword=true;
 		}
 		else{
 			this.displaySword=false;

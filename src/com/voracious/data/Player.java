@@ -13,10 +13,10 @@ public class Player {
 	private ArrayList<Magic> magicks=new ArrayList<Magic>();
 	private int[] stats={0,0,0,0};//hp,attack,def,mp
 	private int currentHp,currentMp;
-	private String fileName="smallPlayer.png";
+	private String fileName="playerV2.png";//"smallPlayer.png";
 	//the filename is here but the actual image is store in the com.vocariuos.grpahics.componets
-	private final int HEIGHT=15;
-	private final int WIDTH=20;
+	private final int HEIGHT=14;//15;
+	private final int WIDTH=12;//20;
 	
 	private int numPowerUps=5;
 	
