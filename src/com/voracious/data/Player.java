@@ -126,7 +126,7 @@ public class Player {
 	}
 	
 	public boolean canMoveRight(){
-		if(this.getPlayerE().getX()>170){
+		if(this.getPlayerE().getX()>174){
 			return false;
 		}
 		return true;

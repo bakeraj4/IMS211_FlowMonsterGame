@@ -334,7 +334,6 @@ public class PlayScreen extends Screen {
 		for(int i=0;i<this.getData().getMonsters().get(playerX).get(playerY).size();i++){
 			temp=this.getData().getMonsters().get(playerX).get(playerY).get(i);
 			if(this.getPlayer().getSwords().get(swordIndex).getE().hitTest(temp.getE())){
-				System.out.println("s hit");
 				temp.takeDamage(this.getPlayer().getSwords().get(swordIndex).getPower()+this.getPlayer().getStats()[1]);
 				creatureReversal(temp);
 			}
@@ -524,7 +523,7 @@ public class PlayScreen extends Screen {
 
 			//System.out.println("Nope!");
 		}
-		
+		System.out.println(player.getPlayerE().hitTest(E_door));
 		
 		//TODO the returning doorways
 		
