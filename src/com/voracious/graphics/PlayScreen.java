@@ -16,6 +16,7 @@ import com.voracious.graphics.components.Sprite;
  * 
  * @author Aaron Baker
  *
+ *	This class is used to display the action in the games and some controlling features.
  */
 
 public class PlayScreen extends Screen {
@@ -38,9 +39,12 @@ public class PlayScreen extends Screen {
 	int i[]={1};
 	Entity N_door,S_door,E_door,W_door;
 	
-	
+	/**
+	 * The constructor of the screen.
+	 * @param width The width of the screen.
+	 * @param height The height of the screen.
+	 */
 	public PlayScreen(int width, int height) {
-
 		super(width, height);
 
         s= new Sprite(200,150,"officalFloor.png");
@@ -49,18 +53,20 @@ public class PlayScreen extends Screen {
         this.setData(new GameData());
 
         shutAllDoors();
-  
 		player =new Player("Aaron");
-		
 		this.startTime=System.nanoTime();
 	}
 	
+	/**
+	 * This method is what draws the game.
+	 */
 	@Override
 	public void render() {
+		//Draws the screen and the player.
 		s.draw(this, 0, 0);
 		player.getPlayerE().draw(this);
 		
-						
+		//Draws the doors.
 		N_door.setX(90);
 	    N_door.setY(2);
 	    N_door.draw(this);
@@ -77,7 +83,7 @@ public class PlayScreen extends Screen {
 	    E_door.setY(67);
 	    E_door.draw(this);
 
-	    
+	    //Draws the player's actions is appropriate 
 	    if(this.displaySpell){
 	    	this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().draw(this);
 	    }
@@ -88,30 +94,27 @@ public class PlayScreen extends Screen {
 	    	this.getPlayer().getSheilds().get(this.getPlayer().getSwordNum()).getE().draw(this);
 	    }
 	    
+	    //Draws the creatures.
 	    int x=this.player.getLoc().getFirst();
 		int y=this.player.getLoc().getSecond();
 		for(int i=0;i<this.getData().getMonsters().get(x).get(y).size();i++){
-			//this.getData().getMonsters().get(x).get(y).get(i).getE().setY(40);
-			//this.getData().getMonsters().get(x).get(y).get(i).getE().setX(100);
 			this.getData().getMonsters().get(x).get(y).get(i).getE().draw(this);
 		}
 	}
 	
+	/**
+	 * This is the tick method that moves the entities used in the game.
+	 * The order:	player,
+	 * 				mode changes,
+	 * 				players actions,
+	 * 				monster movements,
+	 * 				pause menu stuff,
+	 * 				cleared room stuff,
+	 * 				changes in the players movement
+	 */
 	@Override
 	public void tick() {
 		player.getPlayerE().tick();
-		/*System.out.println(this.player.getStat(0)
-				+", "+this.player.getStat(1)
-				+", "+this.player.getStat(2)
-				+", "+this.player.getStat(3));*/
-		
-		/*System.out.println(this.getData().getMonsters().get(0).get(0).get(0).getE().getVx()+", "
-				+this.getData().getMonsters().get(0).get(0).get(0).getE().getVy()+", "
-				+this.getData().getMonsters().get(0).get(0).get(0).getE().getX()+", "
-				+this.getData().getMonsters().get(0).get(0).get(0).getE().getY());*/
-		
-		/*System.out.println(player.getPlayerE().getX()+", "
-				+player.getPlayerE().getY());*/
 				
 		canChangeMode();
 		if(this.getMode().equals("magic")){
@@ -129,63 +132,57 @@ public class PlayScreen extends Screen {
 		int y=this.player.getLoc().getSecond();
 		moveMonsters(x,y);
 		
-		
 		openPauseMenu();
 		
 		roomClearer();
 		
-		characterMover();
-		
+		characterMover();	
 	}
-
 	
-
+	/**
+	 * This menu prepares the keys used in the Scren.
+	 */
 	@Override
 	public void start() {
-		InputHandler.registerKey(KeyEvent.VK_D);
-		InputHandler.registerKey(KeyEvent.VK_A);
-		InputHandler.registerKey(KeyEvent.VK_W);
-		InputHandler.registerKey(KeyEvent.VK_S);
-
+		InputHandler.registerKey(KeyEvent.VK_D);//move right
+		InputHandler.registerKey(KeyEvent.VK_A);//move left
+		InputHandler.registerKey(KeyEvent.VK_W);//move up
+		InputHandler.registerKey(KeyEvent.VK_S);//move down
 		InputHandler.registerKey(KeyEvent.VK_Q);//used for casting magic
-		
-		InputHandler.registerKey(KeyEvent.VK_RIGHT);
-		InputHandler.registerKey(KeyEvent.VK_LEFT);
-		InputHandler.registerKey(KeyEvent.VK_UP);
-		InputHandler.registerKey(KeyEvent.VK_DOWN);
-		
-
-		InputHandler.registerKey(KeyEvent.VK_ESCAPE);
-		
-
-		InputHandler.registerKey(KeyEvent.VK_SPACE);
-		
+		InputHandler.registerKey(KeyEvent.VK_RIGHT);//swing, cast, defend right
+		InputHandler.registerKey(KeyEvent.VK_LEFT);//swing, cast, defend left
+		InputHandler.registerKey(KeyEvent.VK_UP);//swing, cast, defend up
+		InputHandler.registerKey(KeyEvent.VK_DOWN);//swing, cast, defend down
+		InputHandler.registerKey(KeyEvent.VK_ESCAPE);//change to the pause menu
 	}
 	
+	/**
+	 * This method removes the listeners for the keys used in the screen. 
+	 */
 	@Override
 	public void stop() {
 		InputHandler.deregisterKey(KeyEvent.VK_D);
 		InputHandler.deregisterKey(KeyEvent.VK_A);
 		InputHandler.deregisterKey(KeyEvent.VK_W);
 		InputHandler.deregisterKey(KeyEvent.VK_S);
-		
 		InputHandler.deregisterKey(KeyEvent.VK_RIGHT);
 		InputHandler.deregisterKey(KeyEvent.VK_LEFT);
 		InputHandler.deregisterKey(KeyEvent.VK_UP);
 		InputHandler.deregisterKey(KeyEvent.VK_DOWN);
-		
-
 		InputHandler.deregisterKey(KeyEvent.VK_ESCAPE);
-		
-		
-		InputHandler.registerKey(KeyEvent.VK_SPACE);
-	
 	}
 	
+	/**
+	 * Gets the value determined in to switch the screens.
+	 * @return The value determined in to switch the screens.
+	 */
 	public boolean getSwap() {
 		return swap;
 	}
 
+	/**
+	 * This method changes the value that is used to determine to switch to the pause menu.
+	 */
 	public void changeSwap() {
 		this.swap = !this.swap;
 	}
@@ -204,18 +201,27 @@ public class PlayScreen extends Screen {
 		this.data = data;
 	}
 	
+	/**
+	 * This method is used to change the doors such that it looks like that the next room is accessible.
+	 */
 	public void changeClearDoors(){
 		shutAllDoors();
 		N_door=new Entity(22,15,i,"upN_Door.png");
         E_door=new Entity(14,17,i,"upE_Door.png");
 	}
 	
+	/**
+	 * This method will change the doors such that it looks like they changed rooms and are in the next one.
+	 */
 	public void inNewRoom(){
 		shutAllDoors();
 		S_door=new Entity(22,15,i,"upS_Door.png");
 		W_door=new Entity(14,17,i,"upW_Door.png");
 	}
 	
+	/**
+	 * This method shuts all of the doors in a room.
+	 */
 	public void shutAllDoors(){
 		N_door=new Entity(22,15,i,"downN_door.png");
         S_door=new Entity(22,15,i,"downS_door.png");
@@ -237,15 +243,25 @@ public class PlayScreen extends Screen {
 		this.pointGiven = pointGiven;
 	}
 
-	
+	/**
+	 * This method gets the current player.
+	 * @return The current player.
+	 */
 	public Player getPlayer(){
 		return this.player;
 	}
 	
+	/**
+	 * This method changes the current player.
+	 * @param tmp The new player.
+	 */
 	public void setPlayer(Player tmp){
 		this.player=tmp;
 	}
 	
+	/**
+	 * This method determines if a shield needs to be placed and performs hit tests.
+	 */
 	public void defendShield(){//TODO why is sheild after clearing a level in top left corner?
 		Sheild tmp=this.getPlayer().getSheilds().get(this.getPlayer().getSheildNum());
 		double playerX=this.getPlayer().getPlayerE().getX();
@@ -275,6 +291,10 @@ public class PlayScreen extends Screen {
 		}
 	}
 	
+	/**
+	 * This method determines if any of the monsters hit the shield.
+	 * @param protector
+	 */
 	public void hitTestSheild(Sheild protector){//TODO why no protecting?
 		Monster temp;
 		int playerX=this.getPlayer().getLoc().getFirst();
@@ -285,10 +305,12 @@ public class PlayScreen extends Screen {
 				System.out.println("sh hit");
 				creatureReversal(temp);
 			}
-		
 		}
 	}
 	
+	/**
+	 * This method determines if a sword is needed on the screen and performs hit tests.
+	 */
 	public void swingSword(){
 		int swordnum=this.getPlayer().getSwordNum();
 		double playerX=this.getPlayer().getPlayerE().getX();
@@ -321,21 +343,30 @@ public class PlayScreen extends Screen {
 			this.displaySword=false;
 		}
 	}
-	
+	/**
+	 * This method does the hit test for the sword swinging.
+	 * @param swordIndex The sword number in use.
+	 */
 	public void hitTestSword(int swordIndex){
 		Monster temp;
 		int playerX=this.getPlayer().getLoc().getFirst();
 		int playerY=this.getPlayer().getLoc().getSecond();
 		for(int i=0;i<this.getData().getMonsters().get(playerX).get(playerY).size();i++){
+			//goes through all of the monsters in the x->y list
 			temp=this.getData().getMonsters().get(playerX).get(playerY).get(i);
 			if(this.getPlayer().getSwords().get(swordIndex).getE().hitTest(temp.getE())){
+				//the monster was hit and will take damage and reacoil.
 				temp.takeDamage(this.getPlayer().getSwords().get(swordIndex).getPower()+this.getPlayer().getStats()[1]);
 				creatureReversal(temp);
 			}
-		
 		}
 	}
 	
+	/**
+	 * This method will make a monster move in the opposite direction.
+	 * The method will call the tick method of the monster to make it move.
+	 * @param monst The monster being moved backwards.
+	 */
 	public void creatureReversal(Monster monst){
 		monst.getE().setVx(monst.getE().getVx()*-2);
 		monst.getE().setVy(monst.getE().getVy()*-2);
@@ -343,10 +374,14 @@ public class PlayScreen extends Screen {
 			monst.getE().tick();
 	}
 	
+	/**
+	 * This method will cast and handle the movement of spells.
+	 */
 	public void castSpell(){
 		int cMP=this.getPlayer().getCurrentMp();
 		int costMP=this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getCost();
 		if(cMP >= costMP && !displaySpell){
+			//Cast a spell if there is enough mp and a spell hasn't been cast yet.
 			int magNum=this.getPlayer().getMagickNum();
 			if(InputHandler.isPressed(KeyEvent.VK_LEFT)){
 				this.getPlayer().setCurrentMp(cMP-costMP);
@@ -407,7 +442,7 @@ public class PlayScreen extends Screen {
 				this.displaySpell=true;
 			}
 		}
-		else if(displaySpell){
+		else if(displaySpell){//If a spell was cast
 			{//if hit any of the currently displayed monsters
 				for(int i=0;i<this.getData().getMonsters().get(this.getPlayer().getLoc().getFirst()).get(this.getPlayer().getLoc().getSecond()).size();i++){
 					Monster temp=this.getData().getMonsters().get(this.getPlayer().getLoc().getFirst()).get(this.getPlayer().getLoc().getSecond()).get(i);
@@ -420,21 +455,30 @@ public class PlayScreen extends Screen {
 			}
 			if(this.canMove(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE()))//check walls
 				removeSpell();
-			else//TODO why no ticking?
+			else//Move across the screen.
+				//TODO why no ticking?
 				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().tick();//tick it
 		}
 		else{
 		}
 	}
 	
+	/**
+	 * This method determines if an entity can move. 
+	 * It doesn't take in consideration that an entity could move down with the wall when x=wall's x vx=1 and vy=1.
+	 * @param E The entity that will have its movement tested.
+	 * @return If the enitiy can move or not.
+	 */
 	public boolean canMove(Entity E){
+		//This section determines if the entity can move left or right.
 		if(E.getX()+(E.getWidth()/2)+E.getVx()>=171){
 			return false;
 		}
 		else if(E.getX()+(E.getWidth()/2)-E.getVx()<=36){
 			return false;
 		}
-
+		
+		//This section determines if an entity can move up or down.
 		if(E.getY()+(E.getHeight()/2)-E.getVy()<=17){//17
 			return false;
 		}
@@ -444,6 +488,9 @@ public class PlayScreen extends Screen {
 		return true;
 	}
 	
+	/**
+	 * This method is used to remove the spell from the screen.
+	 */
 	public void removeSpell(){
 		this.displaySpell=false;
 		zeroVelocity(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE());
@@ -451,32 +498,33 @@ public class PlayScreen extends Screen {
 		//this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY((Double) null);
 	}
 	
-	
+	/**
+	 * This method determines the player's sprite's movement.
+	 * The w,a,s,d keys are used to move up, left, down, and right.
+	 * Then the method does hit tests for the player.
+	 */
 	public void characterMover(){
-		if((InputHandler.isPressed(KeyEvent.VK_D) /*||
-				InputHandler.isPressed(KeyEvent.VK_RIGHT)*/) && player.canMoveRight()){
+		//This section determines the x velocity of the player.
+		if(InputHandler.isPressed(KeyEvent.VK_D) && player.canMoveRight()){
 			player.getPlayerE().setVx(1.0);
 		}
-		else if((InputHandler.isPressed(KeyEvent.VK_A)/*||
-				InputHandler.isPressed(KeyEvent.VK_LEFT)*/) && player.canMoveLeft()){
+		else if(InputHandler.isPressed(KeyEvent.VK_A) && player.canMoveLeft()){
 			player.getPlayerE().setVx(-1.0);
 		}
 		else{
 			player.getPlayerE().setVx(0);
 		}
 		
-		if((InputHandler.isPressed(KeyEvent.VK_W)/*||
-				InputHandler.isPressed(KeyEvent.VK_UP)*/) && player.canMoveUp()){
+		//This section determines the y velocity of the player.
+		if(InputHandler.isPressed(KeyEvent.VK_W)&& player.canMoveUp()){
 			player.getPlayerE().setVy(-0.75);
 		}
-		else if((InputHandler.isPressed(KeyEvent.VK_S)/*||
-				InputHandler.isPressed(KeyEvent.VK_DOWN)*/) && player.canMoveDown()){
+		else if(InputHandler.isPressed(KeyEvent.VK_S) && player.canMoveDown()){
 			player.getPlayerE().setVy(0.75);
 		}	
 		else{
 			player.getPlayerE().setVy(0);
 		}
-
 		characterHitTest();
 	}
 	/**
