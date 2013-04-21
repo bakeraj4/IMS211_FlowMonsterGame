@@ -29,6 +29,8 @@ public class PlayScreen extends Screen {
 	private boolean displaySword=false;
 	private boolean displaySheild=false;
 	
+	private boolean testBacktrack=false;
+	
 	private String mode="sword";
 	
 	long startTime;
@@ -64,7 +66,7 @@ public class PlayScreen extends Screen {
 	    N_door.draw(this);
 	    
 	    S_door.setX(90);
-	    S_door.setY(135);
+	    S_door.setY(134);
 	    S_door.draw(this);
 	    
 	    W_door.setX(1);
@@ -508,7 +510,7 @@ public class PlayScreen extends Screen {
 			this.zeroVelocity(this.getPlayer().getPlayerE());
 			this.getPlayer().getLoc().setFirst(this.getPlayer().getLoc().getFirst()+1);
 			this.inNewRoom();
-
+			testBacktrack=true;
 			//set the y to value so touching the Sdoor and if up then close the door. if the player moves down on the sdoor and not shut move it back down
 		}
 		else if(player.getPlayerE().hitTest(E_door)&& this.E_door.getFileName().equals("upE_Door.png")){
@@ -517,16 +519,32 @@ public class PlayScreen extends Screen {
 			this.zeroVelocity(this.getPlayer().getPlayerE());
 			this.getPlayer().getLoc().setSecond(this.getPlayer().getLoc().getSecond()+1);
 			this.inNewRoom();
+			testBacktrack=true;
 			//set the y to value so touching the Wdoor and if up then close the door. if the player moves down on the sdoor and not shut move it back down
 		}
 		else{
 
-			//System.out.println("Nope!");
 		}
-		System.out.println(player.getPlayerE().hitTest(E_door));
-		
-		//TODO the returning doorways
-		
+		if(testBacktrack){
+			if(player.getPlayerE().hitTest(S_door)&&this.S_door.getFileName().equals("upS_Door.png")&&InputHandler.isPressed(KeyEvent.VK_S)){
+				this.getPlayer().getPlayerE().setY(17);
+				this.zeroVelocity(this.getPlayer().getPlayerE());
+				this.getPlayer().getLoc().setFirst(this.getPlayer().getLoc().getFirst()-1);
+				this.changeClearDoors();
+			}
+			else if(player.getPlayerE().hitTest(W_door)){
+				this.getPlayer().getPlayerE().setX(174);
+				this.zeroVelocity(this.getPlayer().getPlayerE());
+				this.getPlayer().getLoc().setSecond(this.getPlayer().getLoc().getSecond()-1);
+				this.changeClearDoors();
+			}
+			else{
+				//TODO need to shut the doors but when???
+				//this.shutAllDoors();
+				//testBacktrack=false;
+			}
+		}
+
 		int x=this.getPlayer().getLoc().getFirst();
 		int y=this.getPlayer().getLoc().getSecond();
 		for(int i=0;i<this.getData().getMonsters().get(x).get(y).size();i++){//goes through all of the monsters in the room
@@ -605,9 +623,7 @@ public class PlayScreen extends Screen {
 		}		
 	}
 	
-	private void moveRandom(Monster tmp){
-		//TODO make sure dosen't move off the screen
-		System.out.println("Here");
+	private void moveRandom(Monster tmp){//TODO fix the distribution
 		int rand=(int) Math.ceil(Math.random()*4);
 		if(rand==1){//move left
 			tmp.getE().setVx(-0.25);
