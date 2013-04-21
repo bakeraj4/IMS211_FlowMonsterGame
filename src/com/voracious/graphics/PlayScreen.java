@@ -112,12 +112,8 @@ public class PlayScreen extends Screen {
 		
 		/*System.out.println(player.getPlayerE().getX()+", "
 				+player.getPlayerE().getY());*/
-		
-
-		//TODO move existing fire balls
-		
+				
 		canChangeMode();
-//		System.out.println(this.getMode());
 		if(this.getMode().equals("magic")){
 			castSpell();
 		}
@@ -138,8 +134,6 @@ public class PlayScreen extends Screen {
 		openPauseMenu();
 		
 		roomClearer();
-			
-		//TODO after moving into the next room and the doors shut make the isPointGiven var= false
 		
 		characterMover();
 		
@@ -253,7 +247,7 @@ public class PlayScreen extends Screen {
 		this.player=tmp;
 	}
 	
-	public void defendShield(){
+	public void defendShield(){//TODO why is sheild after clearing a level in top left corner?
 		Sheild tmp=this.getPlayer().getSheilds().get(this.getPlayer().getSheildNum());
 		double playerX=this.getPlayer().getPlayerE().getX();
 		double playerY=this.getPlayer().getPlayerE().getY();
@@ -282,7 +276,7 @@ public class PlayScreen extends Screen {
 		}
 	}
 	
-	public void hitTestSheild(Sheild protector){//TODO START HERE
+	public void hitTestSheild(Sheild protector){//TODO why no protecting?
 		Monster temp;
 		int playerX=this.getPlayer().getLoc().getFirst();
 		int playerY=this.getPlayer().getLoc().getSecond();
@@ -350,7 +344,7 @@ public class PlayScreen extends Screen {
 			monst.getE().tick();
 	}
 	
-	public void castSpell(){//TODO make sure after clearing a room that the current hp and mp = the array vals, player.fullheal() in roomclearer
+	public void castSpell(){
 		int cMP=this.getPlayer().getCurrentMp();
 		int costMP=this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getCost();
 		if(cMP >= costMP && !displaySpell){
@@ -427,7 +421,7 @@ public class PlayScreen extends Screen {
 			}
 			if(this.canMove(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE()))//check walls
 				removeSpell();
-			else
+			else//TODO why no ticking?
 				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().tick();//tick it
 		}
 		else{
@@ -598,6 +592,7 @@ public class PlayScreen extends Screen {
 	
 	private void moveCloser(Monster tmp){//vx and vy were at 0.5
 		//TODO make sure the movement is in the play space before and after the movement
+		//and to be going to the center of the player
 		if(tmp.getE().getX()
 				>player.getPlayerE().getX()){//go left to player
 			tmp.getE().setVx(-0.35);
@@ -623,8 +618,9 @@ public class PlayScreen extends Screen {
 		}		
 	}
 	
-	private void moveRandom(Monster tmp){//TODO fix the distribution
+	private void moveRandom(Monster tmp){
 		int rand=(int) Math.ceil(Math.random()*4);
+		System.out.print(rand);
 		if(rand==1){//move left
 			tmp.getE().setVx(-0.25);
 		}
@@ -635,7 +631,7 @@ public class PlayScreen extends Screen {
 			tmp.getE().setVx(0.25);
 		}
 		else if(rand==4){//move down
-			tmp.getE().setVx(0.25);
+			tmp.getE().setVy(0.25);
 		}
 		else{//error
 			System.out.println("ERROR RAND NOT IN [1,4]");
