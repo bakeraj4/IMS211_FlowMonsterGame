@@ -122,7 +122,6 @@ public class PlayScreen extends Screen {
 		else if(this.getMode().equals("sheild"))
 			defendShield();
 		else{
-			//System.out.println("Error in the tick's actions");
 		}
 		
 		//go through all of the elements at get(x).get(y) these are the monsters on that particular floor.
@@ -425,7 +424,6 @@ public class PlayScreen extends Screen {
 				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().tick();//tick it
 		}
 		else{
-			//System.out.println("NO MP");
 		}
 	}
 	
@@ -481,44 +479,56 @@ public class PlayScreen extends Screen {
 
 		characterHitTest();
 	}
-	
+	/**
+	 * This method controls when the pause menu is open.
+	 * When the player taps the escape button the method changes a variable that is responsible for swapping to the pause screen.
+	 */
 	private void openPauseMenu() {
 		if(InputHandler.isPressed(KeyEvent.VK_ESCAPE)){
 			this.changeSwap();			
 //these next two lines are kill lines to test the opening of the doors
-		if(this.getData().getMonsters().get(0).get(0).size()!=0)
-				this.getData().getMonsters().get(0).get(0).get(0).setHp(0);
+/*		if(this.getData().getMonsters().get(0).get(0).size()!=0)
+				this.getData().getMonsters().get(0).get(0).get(0).setHp(0);*/
 		}
 		
 	}
 	
+	/**
+	 * This method will stop the motion of an entity.
+	 * The x and y velocities are set to 0.
+	 * @param E The entity having its velocities being set to 0.
+	 */
 	private void zeroVelocity(Entity E){
 		E.setVx(0.0);
 		E.setVy(0.0);
 	}
 	
+	/**
+	 * This method is the hit test method for the player.
+	 * It checks for collisions with monsters and the rooms doors.
+	 */
 	private void characterHitTest() {
 		if(player.getPlayerE().hitTest(N_door)&& this.N_door.getFileName().equals("upN_Door.png")){
 			//move the player up to the next room
-			this.getPlayer().getPlayerE().setY(121);//as of now the player must slow move up by lightly tapping up and to stay incontact w/ the door
+			this.getPlayer().getPlayerE().setY(121);
 			this.zeroVelocity(this.getPlayer().getPlayerE());
 			this.getPlayer().getLoc().setFirst(this.getPlayer().getLoc().getFirst()+1);
 			this.inNewRoom();
 			testBacktrack=true;
-			//set the y to value so touching the Sdoor and if up then close the door. if the player moves down on the sdoor and not shut move it back down
 		}
 		else if(player.getPlayerE().hitTest(E_door)&& this.E_door.getFileName().equals("upE_Door.png")){
 			//move the player up to the next room
-			this.getPlayer().getPlayerE().setX(16);//as of now the player must slow move up by lightly tapping up and to stay incontact w/ the door
+			this.getPlayer().getPlayerE().setX(16);
 			this.zeroVelocity(this.getPlayer().getPlayerE());
 			this.getPlayer().getLoc().setSecond(this.getPlayer().getLoc().getSecond()+1);
 			this.inNewRoom();
 			testBacktrack=true;
-			//set the y to value so touching the Wdoor and if up then close the door. if the player moves down on the sdoor and not shut move it back down
 		}
 		else{
 
 		}
+		
+		//This section does hit tests with the s and w doors to see if the player will return to the previous room.
 		if(testBacktrack){
 			if(player.getPlayerE().hitTest(S_door)&&this.S_door.getFileName().equals("upS_Door.png")&&InputHandler.isPressed(KeyEvent.VK_S)){
 				this.getPlayer().getPlayerE().setY(17);
@@ -538,7 +548,8 @@ public class PlayScreen extends Screen {
 				//testBacktrack=false;
 			}
 		}
-
+		
+		//This code block performs hit test on all of the monsters in the room with the player.
 		int x=this.getPlayer().getLoc().getFirst();
 		int y=this.getPlayer().getLoc().getSecond();
 		for(int i=0;i<this.getData().getMonsters().get(x).get(y).size();i++){//goes through all of the monsters in the room
@@ -546,20 +557,18 @@ public class PlayScreen extends Screen {
 			if(this.getPlayer().getPlayerE().hitTest(temp)){//player is in contact with a monster
 				this.getPlayer().takeDamage(this.getData().getMonsters().get(x).get(y).get(i).getAttk()/*+100*/);
 			}
-			/*
-			 else if(sheild.hitTest(monsetr)){
-			 	set the monster's velocity to 3 but in opposite direction. if hit with vx=1,vy=-1 then vx=-3,vy=3
-			 	call the monster's tick
-			 }
-			 */
 		}
-		
-		
 	}
 
+	/**
+	 * This method serves as a control structure to determine how a specific monster will move.
+	 * @param x The x coordinate of the room.
+	 * @param y The y coordinate of the room.
+	 */
 	private void moveMonsters(int x, int y) {
+		Monster tmp;
 		for(int i=0;i<this.getData().getMonsters().get(x).get(y).size();i++){
-			Monster tmp=this.getData().getMonsters().get(x).get(y).get(i);
+			tmp=this.getData().getMonsters().get(x).get(y).get(i);
 			
 			if(tmp.getMovement().equals("Close")){
 				moveCloser(tmp);
@@ -568,7 +577,7 @@ public class PlayScreen extends Screen {
 				moveRandom(tmp);
 				
 			}
-			else if(tmp.getMovement().equals("Fig8Knot")){//vertical figure 8
+			else if(tmp.getMovement().equals("Fig8Knot")){
 				moveFig8Knot(tmp);
 			}
 			else if(tmp.getMovement().equals("OutLineCCW")){
@@ -577,8 +586,6 @@ public class PlayScreen extends Screen {
 			else if(tmp.getMovement().equals("OutLineCW")){
 				moveOutLineClockWise(tmp);
 			}
-			
-
 			
 			//check the health status to see if it needs to be removed
 			if(tmp.getHp()<=0){
@@ -589,8 +596,11 @@ public class PlayScreen extends Screen {
 				tmp.getE().tick();
 		}
 	}
-	
-	private void moveCloser(Monster tmp){//vx and vy were at 0.5
+	/**
+	 * The monster will move closer to the player and will appear to chase them.
+	 * @param tmp The monster that will chase the player.
+	 */
+	private void moveCloser(Monster tmp){
 		//TODO make sure the movement is in the play space before and after the movement
 		//and to be going to the center of the player
 		if(tmp.getE().getX()
@@ -618,9 +628,12 @@ public class PlayScreen extends Screen {
 		}		
 	}
 	
+	/**
+	 * The monster with this move type will move in a random fashion.
+	 * @param tmp The monster that will be moving randomly.
+	 */
 	private void moveRandom(Monster tmp){
 		int rand=(int) Math.ceil(Math.random()*4);
-		System.out.print(rand);
 		if(rand==1){//move left
 			tmp.getE().setVx(-0.25);
 		}
@@ -634,7 +647,6 @@ public class PlayScreen extends Screen {
 			tmp.getE().setVy(0.25);
 		}
 		else{//error
-			System.out.println("ERROR RAND NOT IN [1,4]");
 		}
 		if(!this.canMove(tmp.getE())){
 			if(tmp.getE().getY()<=17){
@@ -653,23 +665,28 @@ public class PlayScreen extends Screen {
 		
 	}
 	
+	
+	/**
+	 *  The fig8Knot is a mathematical knot and is a repeating shape.
+	 *  This provides a path for the monsters to follow.
+	 *  Formula found at http://en.wikipedia.org/wiki/Figure-eight_knot_%28mathematics%29.
+	 * @param tmp The monster that will be moving.
+	 */
 	double temp=0;
 	private void moveFig8Knot(Monster tmp){//%3 or 3billion.0
-		temp+=((System.nanoTime()-this.startTime)/(9000000000.0));
-		
+		temp+=(((System.nanoTime()-this.startTime)/(9000000000.0))/900.0);
 		double trig=(2+Math.cos(2*temp));
-		
 		double x= trig*Math.cos(3*temp);
 		double y= trig*Math.sin(3*temp);
-		
-		
-		//TODO reset the offsets and make sure in the room
-		
 		tmp.getE().setX(x*25+70);
 		tmp.getE().setY(y*25+40);
 		
 	}
 
+	/**
+	 * The monster will move around on the outside of the room counter clockwise.
+	 * @param tmp The monster moving.
+	 */
 	private void moveOutLineClockWise(Monster tmp){	
 		if(tmp.getE().getX()+((tmp.getE().getWidth())/2)<171 &&tmp.getE().getY()+ ((tmp.getE().getHeight())/2)==121){//moves accross the bottom to right
 			tmp.getE().setVx(1.0);
@@ -690,10 +707,12 @@ public class PlayScreen extends Screen {
 		else{
 			tmp.getE().setVx(0.0);
 			tmp.getE().setVy(0.0);
-			//System.out.println(tmp.getE().getX()+((tmp.getE().getWidth())/2)+", "+tmp.getE().getY()+ ((tmp.getE().getHeight())/2));
 		}	
 	}
-
+	/**
+	 * The monster will move around on the outside of the room counter counter-clockwise.
+	 * @param tmp The monster moving.
+	 */
 	private void moveOutLineCounterClockWise(Monster tmp){	
 		if(tmp.getE().getX()+((tmp.getE().getWidth())/2)<171 &&tmp.getE().getY()+ ((tmp.getE().getHeight())/2)==17){//moves accross the top to right
 			tmp.getE().setVx(1.0);
@@ -714,16 +733,20 @@ public class PlayScreen extends Screen {
 		else{
 			tmp.getE().setVx(0.0);
 			tmp.getE().setVy(0.0);
-			//System.out.println(tmp.getE().getX()+((tmp.getE().getWidth())/2)+", "+tmp.getE().getY()+ ((tmp.getE().getHeight())/2));
 		}	
 	}
-	
+	/**
+	 * This method will be used to determine if the current room is cleared.
+	 * If the room is cleared it will reward the player.
+	 */
 	private void roomClearer() {
-		if(this.getData().getMonsters().get(this.player.getLoc().getFirst()).get(this.player.getLoc().getSecond()).size()==0){//the room is cleared, the x->y array list is empty
+		if(this.getData().getMonsters().get(this.player.getLoc().getFirst()).get(this.player.getLoc().getSecond()).size()==0){
+			//the room is cleared, the x->y array list is empty
 			this.getData().setComplete(this.player.getLoc().getFirst(), this.player.getLoc().getSecond(), true);
 			this.getPlayer().setNumRoomsCleared(this.player.getNumRoomsCleared()+1);
 			this.getPlayer().fullHeal();
 			if(!this.isPointGiven()){
+				//determines if the player has received the points for upgrades yet.
 				this.getPlayer().setNumPowerUps(this.getPlayer().getNumPowerUps()+1);
 				this.setPointGiven(!this.isPointGiven());
 				
@@ -750,6 +773,10 @@ public class PlayScreen extends Screen {
 		}
 	}
 
+	/**
+	 * This method handles the switching of the modes of the player.
+	 * The system will change the mode iff the q button is pressed.
+	 */
 	public void canChangeMode(){
 		if(InputHandler.isPressed(KeyEvent.VK_Q)){
 			switchMode();			
@@ -757,6 +784,10 @@ public class PlayScreen extends Screen {
 		}
 	}
 	
+	/**
+	 * This method changes the mode that the player is in.
+	 * It switches between sword, magic, and shield in that order.
+	 */
 	public void switchMode(){
 		if(this.getMode().equals("sword")){
 			this.setMode("magic");
@@ -773,6 +804,7 @@ public class PlayScreen extends Screen {
 	}
 	
 	/**
+	 * Gets the mode of the player.
 	 * @return the mode
 	 */
 	public String getMode() {
@@ -780,6 +812,7 @@ public class PlayScreen extends Screen {
 	}
 
 	/**
+	 * Changes the mode that the player is in.
 	 * @param mode the mode to set
 	 */
 	public void setMode(String mode) {

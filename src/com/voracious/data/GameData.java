@@ -23,6 +23,9 @@ public class GameData {
 		this.getMonsters().get(0).get(1).add(new Monster("antlion.png",10,3,8,15,10,"Rand"));
 		this.getMonsters().get(0).get(1).get(0).getE().setX(45);
 		this.getMonsters().get(0).get(1).get(0).getE().setY(65);
+		this.getMonsters().get(0).get(1).add(new Monster("antlion.png",10,3,8,15,10,"Rand"));
+		this.getMonsters().get(0).get(1).get(1).getE().setX(105);
+		this.getMonsters().get(0).get(1).get(1).getE().setY(105);
 		
 		this.getMonsters().get(1).get(0).add(new Monster("bat.png",10,0,1,10,7,"Rand"));
 		this.getMonsters().get(1).get(0).get(0).getE().setX(90);
@@ -33,6 +36,10 @@ public class GameData {
 		this.getMonsters().get(1).get(0).add(new Monster("bat.png",10,0,1,10,7,"Rand"));
 		this.getMonsters().get(1).get(0).get(2).getE().setX(100);
 		this.getMonsters().get(1).get(0).get(2).getE().setY(90);
+		
+		this.getMonsters().get(1).get(1).add(new Monster("PancakeRay.png",10,3,7,100,90,"Close"));
+		this.getMonsters().get(1).get(1).get(0).getE().setX(90);
+		this.getMonsters().get(1).get(1).get(0).getE().setY(60);
 		
 		//Fig8Knot
 		
