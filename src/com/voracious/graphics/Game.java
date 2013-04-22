@@ -46,6 +46,7 @@ public class Game extends Canvas implements Runnable {
     private static boolean paused = false;
     private boolean displayOver=false;
     private boolean changed=false;
+    private boolean clearDoors=false;
     
 //aaron's vars
     PlayScreen playS;
@@ -115,8 +116,12 @@ public class Game extends Canvas implements Runnable {
             	playS.changeSwap();
             }
             
-            if(playS.getData().getComplete()[playS.getPlayer().getLoc().getFirst()][playS.getPlayer().getLoc().getSecond()]){//check if the room has been cleared
-            	playS.changeClearDoors();            	
+            if(playS.getData().getComplete()[playS.getPlayer().getLoc().getFirst()][playS.getPlayer().getLoc().getSecond()]&&!this.clearDoors){//check if the room has been cleared
+            	playS.changeClearDoors();
+            	this.clearDoors=true;
+            }
+            else if(!playS.getData().getComplete()[playS.getPlayer().getLoc().getFirst()][playS.getPlayer().getLoc().getSecond()]){
+            	this.clearDoors=false;
             }
             
             if(playS.getPlayer().getCurrentHp()<=0){
