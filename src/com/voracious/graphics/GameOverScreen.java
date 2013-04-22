@@ -1,5 +1,7 @@
 package com.voracious.graphics;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -44,6 +46,16 @@ public class GameOverScreen extends Screen {
 		//System.out.println(highScores.size());
 		this.writeScores();
 		//shows the top 10 scores
+		
+		String leaders="";
+		for(int i=0;i<10&&i<highScores.size();i++){
+			leaders+=highScores.get(i).getFirst()+"................"+highScores.get(i).getSecond();
+			if(i!=9){
+				leaders+="\n";
+			}
+		}
+		//System.out.println(leaders);
+		//this.leaders=new Text(leaders,20,40);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -99,6 +111,6 @@ public class GameOverScreen extends Screen {
 	}
 	
 	public void render(){
-		
+
 	}
 }
