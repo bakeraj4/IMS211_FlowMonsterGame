@@ -206,8 +206,10 @@ public class PlayScreen extends Screen {
 	 */
 	public void changeClearDoors(){
 		shutAllDoors();
-		N_door=new Entity(22,15,i,"upN_Door.png");
-        E_door=new Entity(14,17,i,"upE_Door.png");
+		if(this.getPlayer().getLoc().getFirst()<this.getData().getMonsters().size()-1)
+			N_door=new Entity(22,15,i,"upN_Door.png");
+		if(this.getPlayer().getLoc().getSecond()<this.getData().getMonsters().get(this.getPlayer().getLoc().getFirst()).size()-1)
+        	E_door=new Entity(14,17,i,"upE_Door.png");
 	}
 	
 	/**

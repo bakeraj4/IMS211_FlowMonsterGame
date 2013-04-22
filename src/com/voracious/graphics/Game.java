@@ -119,6 +119,10 @@ public class Game extends Canvas implements Runnable {
             if(playS.getData().getComplete()[playS.getPlayer().getLoc().getFirst()][playS.getPlayer().getLoc().getSecond()]&&!this.clearDoors){//check if the room has been cleared
             	playS.changeClearDoors();
             	this.clearDoors=true;
+            	if(playS.getPlayer().getLoc().getFirst()==playS.getData().getMonsters().size()-1
+            			&&playS.getPlayer().getLoc().getSecond()==playS.getData().getMonsters().get(playS.getPlayer().getLoc().getFirst()).size()-1){
+            		//TODO do something here b/c the player won the game
+            	}
             }
             else if(!playS.getData().getComplete()[playS.getPlayer().getLoc().getFirst()][playS.getPlayer().getLoc().getSecond()]){
             	this.clearDoors=false;
