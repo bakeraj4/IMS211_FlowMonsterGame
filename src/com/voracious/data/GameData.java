@@ -61,6 +61,21 @@ public class GameData {
 		this.getMonsters().get(0).get(2).get(0).getE().setX(85);
 		this.getMonsters().get(0).get(2).get(0).getE().setY(95);
 		
+		//0,3
+		this.getMonsters().get(0).get(3).add(new Monster("ghost.png",16,5,11,10,10,"Rand"));
+		this.getMonsters().get(0).get(3).get(0).getE().setX(75);
+		this.getMonsters().get(0).get(3).get(0).getE().setY(30);
+		this.getMonsters().get(0).get(3).add(new Monster("ghost.png",16,5,11,10,10,"Rand"));
+		this.getMonsters().get(0).get(3).get(1).getE().setX(30);
+		this.getMonsters().get(0).get(3).get(1).getE().setY(90);
+		this.getMonsters().get(0).get(3).add(new Monster("ghost.png",16,5,11,10,10,"Fig8Knot"));
+		this.getMonsters().get(0).get(3).get(2).getE().setX(150);
+		this.getMonsters().get(0).get(3).get(2).getE().setY(100);
+		this.getMonsters().get(0).get(3).add(new Monster("ghost.png",16,5,11,10,10,"Rand"));
+		this.getMonsters().get(0).get(3).get(3).getE().setX(120);
+		this.getMonsters().get(0).get(3).get(3).getE().setY(70);
+		
+		
 		//Fig8Knot
 		
 		int length=this.getMonsters().size();

@@ -304,7 +304,7 @@ public class PlayScreen extends Screen {
 		for(int i=0;i<this.getData().getMonsters().get(playerX).get(playerY).size();i++){
 			temp=this.getData().getMonsters().get(playerX).get(playerY).get(i);
 			if(protector.getE().hitTest(temp.getE())){
-				System.out.println("sh hit");
+				//System.out.println("sh hit");
 				creatureReversal(temp);
 			}
 		}
@@ -394,10 +394,10 @@ public class PlayScreen extends Screen {
 				this.getPlayer().getMagicks().get(magNum).getE().setVx(-3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 
-				System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
+				/*System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
 						", x: "+this.getPlayer().getMagicks().get(magNum).getE().getX()+
 						", y: "+this.getPlayer().getMagicks().get(magNum).getE().getY());
-				this.displaySpell=true;
+				this.displaySpell=true;*/
 				
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_UP)){
@@ -409,10 +409,10 @@ public class PlayScreen extends Screen {
 				this.getPlayer().getMagicks().get(magNum).getE().setVy(-3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 
-				System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
+				/*System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
 						", x: "+this.getPlayer().getMagicks().get(magNum).getE().getX()+
 						", y: "+this.getPlayer().getMagicks().get(magNum).getE().getY());
-				this.displaySpell=true;
+				this.displaySpell=true;*/
 				
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
@@ -424,10 +424,10 @@ public class PlayScreen extends Screen {
 				this.getPlayer().getMagicks().get(magNum).getE().setVx(3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 				
-				System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
+				/*System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
 						", x: "+this.getPlayer().getMagicks().get(magNum).getE().getX()+
 						", y: "+this.getPlayer().getMagicks().get(magNum).getE().getY());
-				this.displaySpell=true;
+				this.displaySpell=true;*/
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
 				this.getPlayer().setCurrentMp(cMP-costMP);
@@ -438,10 +438,10 @@ public class PlayScreen extends Screen {
 				this.getPlayer().getMagicks().get(magNum).getE().setVy(3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 
-				System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
+				/*System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
 						", x: "+this.getPlayer().getMagicks().get(magNum).getE().getX()+
 						", y: "+this.getPlayer().getMagicks().get(magNum).getE().getY());
-				this.displaySpell=true;
+				this.displaySpell=true;*/
 			}
 		}
 		else if(displaySpell){//If a spell was cast
@@ -592,8 +592,8 @@ public class PlayScreen extends Screen {
 				this.getPlayer().getLoc().setSecond(this.getPlayer().getLoc().getSecond()-1);
 				this.changeClearDoors();
 			}
-			else if (player.getPlayerE().hitTest(S_door)&&this.S_door.getFileName().equals("upS_Door.png")&&InputHandler.isPressed(KeyEvent.VK_W)||
-					player.getPlayerE().hitTest(W_door)&&this.W_door.getFileName().equals("upW_Door.png")&&InputHandler.isPressed(KeyEvent.VK_D)){
+			else if (player.getPlayerE().hitTest(S_door)&&this.S_door.getFileName().equals("upS_Door.png")&&(InputHandler.isPressed(KeyEvent.VK_S)||InputHandler.isPressed(KeyEvent.VK_A)||InputHandler.isPressed(KeyEvent.VK_D))||
+					player.getPlayerE().hitTest(W_door)&&this.W_door.getFileName().equals("upW_Door.png")&&(InputHandler.isPressed(KeyEvent.VK_S)||InputHandler.isPressed(KeyEvent.VK_W)||InputHandler.isPressed(KeyEvent.VK_D))){
 				this.shutAllDoors();
 				testBacktrack=false;
 				
@@ -850,7 +850,7 @@ public class PlayScreen extends Screen {
 			this.setMode("sword");
 		}
 		else{
-			System.out.println("ERROR SWITCH");
+			//System.out.println("ERROR SWITCH");
 		}
 	}
 	
