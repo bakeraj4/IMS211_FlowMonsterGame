@@ -568,7 +568,7 @@ public class PlayScreen extends Screen {
 		}
 		else if(player.getPlayerE().hitTest(E_door)&& this.E_door.getFileName().equals("upE_Door.png")){
 			//move the player up to the next room
-			this.getPlayer().getPlayerE().setX(16);
+			this.getPlayer().getPlayerE().setX(13);
 			this.zeroVelocity(this.getPlayer().getPlayerE());
 			this.getPlayer().getLoc().setSecond(this.getPlayer().getLoc().getSecond()+1);
 			this.inNewRoom();
@@ -586,16 +586,17 @@ public class PlayScreen extends Screen {
 				this.getPlayer().getLoc().setFirst(this.getPlayer().getLoc().getFirst()-1);
 				this.changeClearDoors();
 			}
-			else if(player.getPlayerE().hitTest(W_door)){
+			else if(player.getPlayerE().hitTest(W_door)&&this.W_door.getFileName().equals("upW_Door.png")&&InputHandler.isPressed(KeyEvent.VK_A)){
 				this.getPlayer().getPlayerE().setX(174);
 				this.zeroVelocity(this.getPlayer().getPlayerE());
 				this.getPlayer().getLoc().setSecond(this.getPlayer().getLoc().getSecond()-1);
 				this.changeClearDoors();
 			}
-			else{
-				//TODO need to shut the doors but when???
-				//this.shutAllDoors();
-				//testBacktrack=false;
+			else if (player.getPlayerE().hitTest(S_door)&&this.S_door.getFileName().equals("upS_Door.png")&&InputHandler.isPressed(KeyEvent.VK_W)||
+					player.getPlayerE().hitTest(W_door)&&this.W_door.getFileName().equals("upW_Door.png")&&InputHandler.isPressed(KeyEvent.VK_D)){
+				this.shutAllDoors();
+				testBacktrack=false;
+				
 			}
 		}
 		
