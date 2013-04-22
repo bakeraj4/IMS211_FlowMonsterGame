@@ -30,17 +30,18 @@ public class GameOverScreen extends Screen {
 		String name=(String)JOptionPane.showInputDialog(this, "Type name or username.");
 		
 		this.readScores();
-		System.out.println(highScores.size());
+		//System.out.println(highScores.size());
 		int score=p.determineScore();
-		int i=0;
+		int loc=0;
 		Pair<String, Integer> tmp = new Pair<String,Integer>(name,score);
 		if(highScores.size()!=0){
-			while(score<=highScores.get(i).getSecond()){
-				System.out.println(highScores.get(i).getFirst()+", "+highScores.get(i).getSecond());
-				i++;
+			for(int i=0;i<highScores.size() && score<=highScores.get(i).getSecond();i++){
+				//System.out.println(highScores.get(i).getFirst()+", "+highScores.get(i).getSecond());
+				loc=i;
 			}
 		}
-		highScores.add(i, tmp);
+		highScores.add(loc, tmp);
+		//System.out.println(highScores.size());
 		this.writeScores();
 		//shows the top 10 scores
 	}
@@ -50,7 +51,7 @@ public class GameOverScreen extends Screen {
 		highScores=new ArrayList<Pair<String,Integer>>(); 
 		try {
 			ObjectInputStream in =new ObjectInputStream(new FileInputStream("scores.bin"));
-			Pair<String,Integer> obj=(Pair<String, Integer>) in.readObject();
+			Pair<String,Integer> obj;
 			while((obj=(Pair<String, Integer>) in.readObject())!=null){
 				highScores.add(obj);
 				//i am assuming that the previous scores are already sorted.
@@ -61,7 +62,7 @@ public class GameOverScreen extends Screen {
 			//file doesn't exist so no high scores exist yet
 		} 
 		catch (IOException e) {
-			System.out.println("THERE WAS SOME ERROR IN THE FILE READING!");
+			//System.out.println("THERE WAS SOME ERROR IN THE FILE READING!");
 		}
 		catch (ClassNotFoundException e) {
 			System.out.println("THERE WAS NO INSTANCES OF PAIR!");
