@@ -47,7 +47,7 @@ public class Player {
 	}
 	
 	public int determineScore(){
-		return 3*this.getLoc().getFirst() + this.getLoc().getSecond();
+		return 3*this.getLoc().getFirst() + this.getLoc().getSecond() + this.getNumKills();
 	}
 	
 	private void initSheilds() {
