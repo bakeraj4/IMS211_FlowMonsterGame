@@ -232,7 +232,7 @@ public class PlayScreen extends Screen {
         try{
         	if(this.getData().getComplete()[this.getPlayer().getLoc().getFirst()][this.getPlayer().getLoc().getSecond()])
         		this.setPointGiven(false);
-        		//TODO check the score to make sure that things are getting upgraded correctly weapon wise.
+        		//System.out.println(this.getPlayer().determineScore());
         }
         catch(NullPointerException e){
         	
@@ -796,6 +796,7 @@ public class PlayScreen extends Screen {
 	 * This method will be used to determine if the current room is cleared.
 	 * If the room is cleared it will reward the player.
 	 */
+	private int num10s=0;
 	private void roomClearer() {
 		if(this.getData().getMonsters().get(this.player.getLoc().getFirst()).get(this.player.getLoc().getSecond()).size()==0){
 			//the room is cleared, the x->y array list is empty
@@ -807,25 +808,31 @@ public class PlayScreen extends Screen {
 				this.getPlayer().setNumPowerUps(this.getPlayer().getNumPowerUps()+1);
 				this.setPointGiven(true);
 				
-				int score =this.getPlayer().determineScore();
-				if(score%10==0){//every 10 levels up a point
-					if (score%3==0&&this.getPlayer().getSwordNum()<this.getPlayer().getSwords().size()-1){
-						// and the sowrd num is less than the max size. there are 5 swords at 0,1,2,3,4
-						this.getPlayer().setSwordNum(this.getPlayer().getSwordNum()+1);
-					}
-					else if (score%4==0 && this.getPlayer().getSheildNum()<this.getPlayer().getSheilds().size()-1){
-						//and the sheild num is less than the max size. there are 3 shileds at 0,1,2
-						this.getPlayer().setSheildNum(this.getPlayer().getSheildNum()+1);
-					}
-					else if (score%1==0 && this.getPlayer().getMagickNum()<this.getPlayer().getMagicks().size()-1){ 
-						//and the magic num is less than the max size. there are 4 magicks at 0,1,2,3
-						this.getPlayer().setMagickNum(this.getPlayer().getMagickNum()+1);
-					}
-					else{ 
-						//add to the num power ups by 3, b/c out of equipment upgrades and still want to give help to the player
-						this.getPlayer().setNumPowerUps(this.getPlayer().getNumPowerUps()+3);
+				//int counter=0;
+				int cscore =this.getPlayer().determineScore();
+				while(cscore-(10*num10s)>10){
+					num10s++;
+					//counter++;
+					if(10*num10s%10==0&&num10s!=0){//every 10 levels up a point
+						if ((10*num10s)%3==0&&this.getPlayer().getSwordNum()<this.getPlayer().getSwords().size()-1){
+							// and the sowrd num is less than the max size. there are 5 swords at 0,1,2,3,4
+							this.getPlayer().setSwordNum(this.getPlayer().getSwordNum()+1);
+						}
+						else if ((10*num10s)%4==0 && this.getPlayer().getSheildNum()<this.getPlayer().getSheilds().size()-1){
+							//and the sheild num is less than the max size. there are 3 shileds at 0,1,2
+							this.getPlayer().setSheildNum(this.getPlayer().getSheildNum()+1);
+						}
+						else if ((10*num10s%1)==0 && this.getPlayer().getMagickNum()<this.getPlayer().getMagicks().size()-1){ 
+							//and the magic num is less than the max size. there are 4 magicks at 0,1,2,3
+							this.getPlayer().setMagickNum(this.getPlayer().getMagickNum()+1);
+						}
+						else{ 
+							//add to the num power ups by 3, b/c out of equipment upgrades and still want to give help to the player
+							this.getPlayer().setNumPowerUps(this.getPlayer().getNumPowerUps()+3);
+						}
 					}
 				}
+				
 			}
 		}
 	}
