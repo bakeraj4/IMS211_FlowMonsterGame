@@ -229,6 +229,14 @@ public class PlayScreen extends Screen {
         S_door=new Entity(22,15,i,"downS_door.png");
         E_door=new Entity(14,17,i,"downE_door.png");
         W_door=new Entity(14,17,i,"downW_door.png");
+        try{
+        	if(this.getData().getComplete()[this.getPlayer().getLoc().getFirst()][this.getPlayer().getLoc().getSecond()])
+        		this.setPointGiven(false);
+        		//TODO check the score to make sure that things are getting upgraded correctly weapon wise.
+        }
+        catch(NullPointerException e){
+        	
+        }
 	}
 
 	/**
@@ -652,8 +660,6 @@ public class PlayScreen extends Screen {
 	 * @param tmp The monster that will chase the player.
 	 */
 	private void moveCloser(Monster tmp){
-		//TODO make sure the movement is in the play space before and after the movement
-		//and to be going to the center of the player
 		if(tmp.getE().getX()
 				>player.getPlayerE().getX()){//go left to player
 			tmp.getE().setVx(-0.35);
@@ -799,7 +805,7 @@ public class PlayScreen extends Screen {
 			if(!this.isPointGiven()){
 				//determines if the player has received the points for upgrades yet.
 				this.getPlayer().setNumPowerUps(this.getPlayer().getNumPowerUps()+1);
-				this.setPointGiven(!this.isPointGiven());
+				this.setPointGiven(true);
 				
 				int score =this.getPlayer().determineScore();
 				if(score%10==0){//every 10 levels up a point
