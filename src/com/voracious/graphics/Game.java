@@ -115,11 +115,7 @@ public class Game extends Canvas implements Runnable {
             
             if(playS.getData().getComplete()[playS.getPlayer().getLoc().getFirst()][playS.getPlayer().getLoc().getSecond()]&&!this.clearDoors){//check if the room has been cleared
             	playS.changeClearDoors();
-            	this.clearDoors=true;
-            	if(playS.getPlayer().getLoc().getFirst()==playS.getData().getMonsters().size()-1
-            			&&playS.getPlayer().getLoc().getSecond()==playS.getData().getMonsters().get(playS.getPlayer().getLoc().getFirst()).size()-1){
-            		//TODO do something here b/c the player won the game
-            	}
+            	this.clearDoors=true;	
             }
             else if(!playS.getData().getComplete()[playS.getPlayer().getLoc().getFirst()][playS.getPlayer().getLoc().getSecond()]){
             	this.clearDoors=false;
@@ -128,13 +124,26 @@ public class Game extends Canvas implements Runnable {
             if(playS.getPlayer().getCurrentHp()<=0){
             	switchScreen(overS);
             	if(displayOver){
-                	overS.onDisplay();
+                	overS.onDisplay(false,0);
                 	displayOver=false;
-                	changed=true;
+                	changed=true; 
             	}
             	if(!this.changed)
             		this.displayOver=true;
             }
+            else if(playS.getPlayer().getLoc().getFirst()==playS.getData().getMonsters().size()-1
+        			&&playS.getPlayer().getLoc().getSecond()==playS.getData().getMonsters().get(playS.getPlayer().getLoc().getFirst()).size()-1
+        			&&playS.getData().getComplete()[playS.getPlayer().getLoc().getFirst()][playS.getPlayer().getLoc().getSecond()]){
+        		//TODO do something here b/c the player won the game
+        		switchScreen(overS);
+            	if(displayOver){
+                	overS.onDisplay(true,this.playS.getData().getMonsters().size()*this.playS.getData().getMonsters().get(0).size());
+                	displayOver=false;
+                	changed=true; 
+            	}
+            	if(!this.changed)
+            		this.displayOver=true;
+        	}
             
             
             	

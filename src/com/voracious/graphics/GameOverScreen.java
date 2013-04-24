@@ -26,13 +26,18 @@ public class GameOverScreen extends Screen {
 		p=play;
 	}
 	
-	public void onDisplay(){
+	public void onDisplay(boolean winner,int crossProductDimensions){
 		String name=(String)JOptionPane.showInputDialog(this, "Type name or username.");
-		
 		this.readScores();
-		//System.out.println(highScores.size());
 		int score=p.determineScore();
 		int loc=0;
+		if(winner){
+			s=new Sprite(200,150,"Winner.png");
+			s.draw(this,-1,-1);
+			System.out.print(score);
+			score+=crossProductDimensions;
+			System.out.print(score);
+		}
 		Pair<String, Integer> tmp = new Pair<String,Integer>(name,score);
 		if(highScores.size()!=0){
 			for(int i=0;i<highScores.size() && score<=highScores.get(i).getSecond();i++){
