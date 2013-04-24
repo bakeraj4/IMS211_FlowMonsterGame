@@ -4,10 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Insets;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
@@ -16,10 +16,7 @@ import kuusisto.tinysound.Music;
 import kuusisto.tinysound.Sound;
 import kuusisto.tinysound.TinySound;*/
 
-import com.voracious.graphics.components.Entity;
 import com.voracious.graphics.components.Screen;
-import com.voracious.graphics.components.Sprite;
-import com.voracious.project.screens.Temp;
 
 /**
  * Basic boiler plate code to create a window and allow rendering pixel data to it.
@@ -140,11 +137,6 @@ public class Game extends Canvas implements Runnable {
             }
             
             
-            //else if room cleared is false but have contact with the prev dooor (need a boolean here)
-            	//bottom doors open
-            /*else{
-            	playS.shutAllDoors();
-            }*/
             	
         }
     }
@@ -159,10 +151,20 @@ public class Game extends Canvas implements Runnable {
 
         currentScreen.render();
         currentScreen.draw(pixels);
+        
 
         Graphics g = bs.getDrawGraphics();
         g.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
         g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
+        
+        //Draws the strings for me on the game over Screen.
+        if(this.currentScreen.getClass()==this.overS.getClass()){
+        	ArrayList<String> tmp=overS.getRanks();
+        	for(int i=0, x=455,  y=90;i<tmp.size();i++,y+=20){
+        		g.drawString(tmp.get(i), x, y);
+        	}
+        }
+        
         g.dispose();
         bs.show();
     }

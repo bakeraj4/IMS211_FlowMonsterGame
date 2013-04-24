@@ -600,7 +600,7 @@ public class PlayScreen extends Screen {
 				this.getPlayer().getLoc().setSecond(this.getPlayer().getLoc().getSecond()-1);
 				this.changeClearDoors();
 			}
-			else if (player.getPlayerE().hitTest(S_door)&&this.S_door.getFileName().equals("upS_Door.png")&&(InputHandler.isPressed(KeyEvent.VK_S)||InputHandler.isPressed(KeyEvent.VK_A)||InputHandler.isPressed(KeyEvent.VK_D))||
+			else if (player.getPlayerE().hitTest(S_door)&&this.S_door.getFileName().equals("upS_Door.png")&&(InputHandler.isPressed(KeyEvent.VK_W)||InputHandler.isPressed(KeyEvent.VK_A)||InputHandler.isPressed(KeyEvent.VK_D))||
 					player.getPlayerE().hitTest(W_door)&&this.W_door.getFileName().equals("upW_Door.png")&&(InputHandler.isPressed(KeyEvent.VK_S)||InputHandler.isPressed(KeyEvent.VK_W)||InputHandler.isPressed(KeyEvent.VK_D))){
 				this.shutAllDoors();
 				testBacktrack=false;

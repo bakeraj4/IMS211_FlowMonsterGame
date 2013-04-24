@@ -1,7 +1,5 @@
 package com.voracious.graphics;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -9,7 +7,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 
 import com.voracious.data.Pair;
@@ -21,6 +18,7 @@ public class GameOverScreen extends Screen {
 	private ArrayList<Pair<String,Integer>> highScores;//will be in a bin file
 	private Sprite s;
 	private Player p;
+	private ArrayList<String> leaders=new ArrayList<String>();
 	public GameOverScreen(int width, int height,Player play) {
 		super(width, height);
 		s=new Sprite(200,150,"gameOver.png");
@@ -38,24 +36,15 @@ public class GameOverScreen extends Screen {
 		Pair<String, Integer> tmp = new Pair<String,Integer>(name,score);
 		if(highScores.size()!=0){
 			for(int i=0;i<highScores.size() && score<=highScores.get(i).getSecond();i++){
-				//System.out.println(highScores.get(i).getFirst()+", "+highScores.get(i).getSecond());
 				loc=i;
 			}
 		}
 		highScores.add(loc, tmp);
-		//System.out.println(highScores.size());
 		this.writeScores();
-		//shows the top 10 scores
-		
-		String leaders="";
-		for(int i=0;i<10&&i<highScores.size();i++){
-			leaders+=highScores.get(i).getFirst()+"................"+highScores.get(i).getSecond();
-			if(i!=9){
-				leaders+="\n";
-			}
+		//shows the top 25 scores
+		for(int i=0;i<25&&i<highScores.size();i++){
+			leaders.add(highScores.get(i).getFirst()+"................"+highScores.get(i).getSecond());
 		}
-		//System.out.println(leaders);
-		//this.leaders=new Text(leaders,20,40);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -111,6 +100,10 @@ public class GameOverScreen extends Screen {
 	}
 	
 	public void render(){
-
+	        
+	}
+	
+	public ArrayList<String> getRanks(){
+		return this.leaders;
 	}
 }
