@@ -312,7 +312,7 @@ public class PlayScreen extends Screen {
 		for(int i=0;i<this.getData().getMonsters().get(playerX).get(playerY).size();i++){
 			temp=this.getData().getMonsters().get(playerX).get(playerY).get(i);
 			if(protector.getE().hitTest(temp.getE())){
-				//System.out.println("sh hit");
+				System.out.println("sh hit");
 				creatureReversal(temp);
 			}
 		}
@@ -808,11 +808,9 @@ public class PlayScreen extends Screen {
 				this.getPlayer().setNumPowerUps(this.getPlayer().getNumPowerUps()+1);
 				this.setPointGiven(true);
 				
-				//int counter=0;
 				int cscore =this.getPlayer().determineScore();
 				while(cscore-(10*num10s)>10){
 					num10s++;
-					//counter++;
 					if(10*num10s%10==0&&num10s!=0){//every 10 levels up a point
 						if ((10*num10s)%3==0&&this.getPlayer().getSwordNum()<this.getPlayer().getSwords().size()-1){
 							// and the sowrd num is less than the max size. there are 5 swords at 0,1,2,3,4
