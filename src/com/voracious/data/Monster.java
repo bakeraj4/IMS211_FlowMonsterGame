@@ -9,13 +9,13 @@ public class Monster {
 	private Entity E;
 	
 	public Monster(String name,int HP, int DEF,int ATTK,int width, int height,String move){//starting def= 7
-		this.setDef(DEF);
 		this.setFileName(name);
 		this.setHp(HP);
-		int[]i={1};
+		this.setDef(DEF);
 		this.setAttk(ATTK);
-		this.setE(new Entity(width,height,i,this.getFileName()));
 		this.setMovement(move);
+		int[]i={1};
+		this.setE(new Entity(width,height,i,this.getFileName()));
 	}
 	
 	public void takeDamage(int playerTotalPower){

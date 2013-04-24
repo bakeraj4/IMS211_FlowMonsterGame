@@ -27,10 +27,9 @@ public class GameOverScreen extends Screen {
 	}
 	
 	public void onDisplay(boolean winner,int crossProductDimensions){
-		int score=p.determineScore();
+		int score=p.determineScore()+crossProductDimensions;
 		if(winner){
 			changeSprite();
-			score+=crossProductDimensions;
 		}
 		tick();
 		String name=(String)JOptionPane.showInputDialog(this, "Type name or username.");
@@ -38,8 +37,8 @@ public class GameOverScreen extends Screen {
 		int loc=0;
 		Pair<String, Integer> tmp = new Pair<String,Integer>(name,score);
 		if(highScores.size()!=0){
-			for(int i=0;i<highScores.size() && score<highScores.get(i).getSecond();i++){
-				loc=i;
+			for(int i=0;i<highScores.size() && score<=highScores.get(i).getSecond();i++){
+				loc=i+1;
 			}
 		}
 		highScores.add(loc, tmp);
