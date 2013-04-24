@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 public class Sprite {
     private int width, height;
     private int[] pixels;
-
+    private String fileName;
     /**
      * Initialize the Sprite with an image file as its data
      * 
@@ -25,7 +25,7 @@ public class Sprite {
         this.width = width;
         this.height = height;
         pixels = new int[width * height];
-
+        fileName=image;
         try {
             BufferedImage file = ImageIO.read(Sprite.class.getResourceAsStream(image));
 
@@ -148,4 +148,18 @@ public class Sprite {
     public int[] getPixels() {
         return pixels;
     }
+
+	/**
+	 * @return the fileName
+	 */
+	public String getFileName() {
+		return fileName;
+	}
+
+	/**
+	 * @param fileName the fileName to set
+	 */
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 }

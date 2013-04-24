@@ -134,8 +134,8 @@ public class Game extends Canvas implements Runnable {
             else if(playS.getPlayer().getLoc().getFirst()==playS.getData().getMonsters().size()-1
         			&&playS.getPlayer().getLoc().getSecond()==playS.getData().getMonsters().get(playS.getPlayer().getLoc().getFirst()).size()-1
         			&&playS.getData().getComplete()[playS.getPlayer().getLoc().getFirst()][playS.getPlayer().getLoc().getSecond()]){
-        		//TODO do something here b/c the player won the game
-        		switchScreen(overS);
+        		overS.changeSprite();
+            	switchScreen(overS);
             	if(displayOver){
                 	overS.onDisplay(true,this.playS.getData().getMonsters().size()*this.playS.getData().getMonsters().get(0).size());
                 	displayOver=false;
@@ -167,9 +167,15 @@ public class Game extends Canvas implements Runnable {
         g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
         
         //Draws the strings for me on the game over Screen.
-        if(this.currentScreen.getClass()==this.overS.getClass()){
+        if(this.currentScreen.getClass()==this.overS.getClass() &&overS.getS().getFileName().equals("gameOver.png")){
         	ArrayList<String> tmp=overS.getRanks();
-        	for(int i=0, x=455,  y=90;i<tmp.size();i++,y+=20){
+        	for(int i=0, x=455,  y=125;i<tmp.size();i++,y+=20){
+        		g.drawString(tmp.get(i), x, y);
+        	}
+        }
+        else if(this.currentScreen.getClass()==this.overS.getClass() &&overS.getS().getFileName().equals("Winner.png")){
+        	ArrayList<String> tmp=overS.getRanks();
+        	for(int i=0, x=505,  y=75;i<tmp.size();i++,y+=20){
         		g.drawString(tmp.get(i), x, y);
         	}
         }

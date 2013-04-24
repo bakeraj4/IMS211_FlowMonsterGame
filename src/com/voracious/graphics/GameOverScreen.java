@@ -27,17 +27,15 @@ public class GameOverScreen extends Screen {
 	}
 	
 	public void onDisplay(boolean winner,int crossProductDimensions){
+		int score=p.determineScore();
+		if(winner){
+			changeSprite();
+			score+=crossProductDimensions;
+		}
+		tick();
 		String name=(String)JOptionPane.showInputDialog(this, "Type name or username.");
 		this.readScores();
-		int score=p.determineScore();
 		int loc=0;
-		if(winner){
-			s=new Sprite(200,150,"Winner.png");
-			s.draw(this,-1,-1);
-			System.out.print(score);
-			score+=crossProductDimensions;
-			System.out.print(score);
-		}
 		Pair<String, Integer> tmp = new Pair<String,Integer>(name,score);
 		if(highScores.size()!=0){
 			for(int i=0;i<highScores.size() && score<=highScores.get(i).getSecond();i++){
@@ -46,10 +44,15 @@ public class GameOverScreen extends Screen {
 		}
 		highScores.add(loc, tmp);
 		this.writeScores();
-		//shows the top 25 scores
-		for(int i=0;i<25&&i<highScores.size();i++){
+		//shows the top 10 scores
+		for(int i=0;i<10&&i<highScores.size();i++){
 			leaders.add(highScores.get(i).getFirst()+"................"+highScores.get(i).getSecond());
 		}
+	}
+	
+	public void changeSprite(){
+		s=new Sprite(200,150,"Winner.png");
+		s.draw(this,-1,-1);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -110,5 +113,9 @@ public class GameOverScreen extends Screen {
 	
 	public ArrayList<String> getRanks(){
 		return this.leaders;
+	}
+
+	public Sprite getS() {
+		return this.s;
 	}
 }
