@@ -303,20 +303,21 @@ public class PlayScreen extends Screen {
 		else{
 			this.displaySheild=false;
 		}
+		this.displaySpell=false;
+		this.displaySword=false;
 	}
 	
 	/**
 	 * This method determines if any of the monsters hit the shield.
 	 * @param protector
 	 */
-	public void hitTestSheild(Sheild protector){//TODO why no protecting?
+	public void hitTestSheild(Sheild protector){
 		Monster temp;
 		int playerX=this.getPlayer().getLoc().getFirst();
 		int playerY=this.getPlayer().getLoc().getSecond();
 		for(int i=0;i<this.getData().getMonsters().get(playerX).get(playerY).size();i++){
 			temp=this.getData().getMonsters().get(playerX).get(playerY).get(i);
 			if(protector.getE().hitTest(temp.getE())){
-				System.out.println("sh hit");
 				creatureReversal(temp);
 			}
 		}
@@ -356,6 +357,9 @@ public class PlayScreen extends Screen {
 		else{
 			this.displaySword=false;
 		}
+
+		this.displaySpell=false;
+		this.displaySheild=false;
 	}
 	/**
 	 * This method does the hit test for the sword swinging.
@@ -463,6 +467,9 @@ public class PlayScreen extends Screen {
 		}
 		else{
 		}
+		
+		this.displaySheild=false;
+		this.displaySword=false;
 	}
 	
 	/**
@@ -496,8 +503,6 @@ public class PlayScreen extends Screen {
 	public void removeSpell(){
 		this.displaySpell=false;
 		zeroVelocity(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE());
-		//this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setX((Double) null);
-		//this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY((Double) null);
 	}
 	
 	/**
@@ -683,17 +688,18 @@ public class PlayScreen extends Screen {
 	 */
 	private void moveRandom(Monster tmp){
 		int rand=(int) Math.ceil(Math.random()*4);
+		int randMov=(int) Math.ceil(Math.random()*4);
 		if(rand==1){//move left
-			tmp.getE().setVx(-0.25);
+			tmp.getE().setVx(-0.25*randMov);
 		}
 		else if(rand==2){//move up
-			tmp.getE().setVy(-0.25);
+			tmp.getE().setVy(-0.25*randMov);
 		}
 		else if(rand==3){//move right
-			tmp.getE().setVx(0.25);
+			tmp.getE().setVx(0.25*randMov);
 		}
 		else if(rand==4){//move down
-			tmp.getE().setVy(0.25);
+			tmp.getE().setVy(0.25*randMov);
 		}
 		else{//error
 		}
