@@ -280,21 +280,25 @@ public class PlayScreen extends Screen {
 			tmp.getE().setX(playerX-(tmp.getWidth()/2));
 			tmp.getE().setY(playerY+(this.getPlayer().getHEIGHT()/2));
 			this.displaySheild=true;
+			this.hitTestSheild(tmp);
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_UP)){
 			tmp.getE().setX(playerX+tmp.getE().getWidth());
 			tmp.getE().setY(playerY-(tmp.getE().getHeight()/2));
 			this.displaySheild=true;
+			this.hitTestSheild(tmp);
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
 			tmp.getE().setX(playerX+this.getPlayer().getWIDTH());
 			tmp.getE().setY(playerY+(this.getPlayer().getHEIGHT()/2));
 			this.displaySheild=true;
+			this.hitTestSheild(tmp);
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
 			tmp.getE().setX(playerX+tmp.getE().getWidth());
 			tmp.getE().setY(playerY+this.getPlayer().getPlayerE().getHeight());
 			this.displaySheild=true;
+			this.hitTestSheild(tmp);
 		}
 		else{
 			this.displaySheild=false;
@@ -393,7 +397,7 @@ public class PlayScreen extends Screen {
 		if(cMP >= costMP && !displaySpell){
 			//Cast a spell if there is enough mp and a spell hasn't been cast yet.
 			int magNum=this.getPlayer().getMagickNum();
-			if(InputHandler.isPressed(KeyEvent.VK_LEFT)){
+			if(InputHandler.isPressed(KeyEvent.VK_LEFT)&&!displaySpell){
 				this.getPlayer().setCurrentMp(cMP-costMP);
 				this.getPlayer().getMagicks().get(magNum).getE().setX(
 						this.getPlayer().getPlayerE().getX());
@@ -402,13 +406,10 @@ public class PlayScreen extends Screen {
 				this.getPlayer().getMagicks().get(magNum).getE().setVx(-3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 
-				/*System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
-						", x: "+this.getPlayer().getMagicks().get(magNum).getE().getX()+
-						", y: "+this.getPlayer().getMagicks().get(magNum).getE().getY());
-				this.displaySpell=true;*/
+				this.displaySpell=true;
 				
 			}
-			else if(InputHandler.isPressed(KeyEvent.VK_UP)){
+			else if(InputHandler.isPressed(KeyEvent.VK_UP)&&!displaySpell){
 				this.getPlayer().setCurrentMp(cMP-costMP);
 				this.getPlayer().getMagicks().get(magNum).getE().setX(
 						this.getPlayer().getPlayerE().getX()+(this.getPlayer().getWIDTH()/2));
@@ -417,13 +418,10 @@ public class PlayScreen extends Screen {
 				this.getPlayer().getMagicks().get(magNum).getE().setVy(-3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 
-				/*System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
-						", x: "+this.getPlayer().getMagicks().get(magNum).getE().getX()+
-						", y: "+this.getPlayer().getMagicks().get(magNum).getE().getY());
-				this.displaySpell=true;*/
+				this.displaySpell=true;
 				
 			}
-			else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
+			else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)&&!displaySpell){
 				this.getPlayer().setCurrentMp(cMP-costMP);
 				this.getPlayer().getMagicks().get(magNum).getE().setX(
 						this.getPlayer().getPlayerE().getX()+this.getPlayer().getWIDTH());
@@ -432,12 +430,9 @@ public class PlayScreen extends Screen {
 				this.getPlayer().getMagicks().get(magNum).getE().setVx(3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 				
-				/*System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
-						", x: "+this.getPlayer().getMagicks().get(magNum).getE().getX()+
-						", y: "+this.getPlayer().getMagicks().get(magNum).getE().getY());
-				this.displaySpell=true;*/
+				this.displaySpell=true;
 			}
-			else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
+			else if(InputHandler.isPressed(KeyEvent.VK_DOWN)&&!displaySpell){
 				this.getPlayer().setCurrentMp(cMP-costMP);
 				this.getPlayer().getMagicks().get(magNum).getE().setX(
 						this.getPlayer().getPlayerE().getX()+(this.getPlayer().getWIDTH()/2));
@@ -446,10 +441,7 @@ public class PlayScreen extends Screen {
 				this.getPlayer().getMagicks().get(magNum).getE().setVy(3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 
-				/*System.out.println(this.getPlayer().getMagicks().get(magNum).getFileName()+
-						", x: "+this.getPlayer().getMagicks().get(magNum).getE().getX()+
-						", y: "+this.getPlayer().getMagicks().get(magNum).getE().getY());
-				this.displaySpell=true;*/
+				this.displaySpell=true;
 			}
 		}
 		else if(displaySpell){//If a spell was cast
