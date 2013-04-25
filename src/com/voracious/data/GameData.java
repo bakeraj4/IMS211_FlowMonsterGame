@@ -162,6 +162,7 @@ public class GameData {
 		this.getMonsters().get(1).get(4).add(new Monster("chocobo.png",10,8,6,20,30,"OutLineCCW"));
 		this.getMonsters().get(1).get(4).get(3).getE().setX(60);
 		this.getMonsters().get(1).get(4).get(3).getE().setY(121-15);
+		
 		//1,5
 		
 		//1,6
