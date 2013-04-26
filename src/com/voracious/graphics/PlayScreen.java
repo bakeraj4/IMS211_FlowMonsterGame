@@ -806,19 +806,25 @@ public class PlayScreen extends Screen {
 				this.getPlayer().setNumPowerUps(this.getPlayer().getNumPowerUps()+1);
 				this.setPointGiven(true);
 				
+				int val=this.getData().getMonsters().size();
+				
 				int cscore =this.getPlayer().determineScore();
-				while(cscore-(10*num10s)>10){
+				while(cscore-(val*num10s)>val){
 					num10s++;
-					if(10*num10s%10==0&&num10s!=0){//every 10 levels up a point
-						if ((10*num10s)%3==0&&this.getPlayer().getSwordNum()<this.getPlayer().getSwords().size()-1){
+					if(val*num10s%val==0&&num10s!=0){//every 10 levels up a point
+						if ((val*num10s)%3==0&&this.getPlayer().getSwordNum()<this.getPlayer().getSwords().size()-1){
 							// and the sowrd num is less than the max size. there are 5 swords at 0,1,2,3,4
 							this.getPlayer().setSwordNum(this.getPlayer().getSwordNum()+1);
 						}
-						else if ((10*num10s)%4==0 && this.getPlayer().getSheildNum()<this.getPlayer().getSheilds().size()-1){
+						else if ((val*num10s)%4==0 &&val%2==0 && this.getPlayer().getSheildNum()<this.getPlayer().getSheilds().size()-1){
 							//and the sheild num is less than the max size. there are 3 shileds at 0,1,2
 							this.getPlayer().setSheildNum(this.getPlayer().getSheildNum()+1);
 						}
-						else if ((10*num10s%1)==0 && this.getPlayer().getMagickNum()<this.getPlayer().getMagicks().size()-1){ 
+						else if ((val*num10s)%2==0 &&val%2!=0 && this.getPlayer().getSheildNum()<this.getPlayer().getSheilds().size()-1){
+							//and the sheild num is less than the max size. there are 3 shileds at 0,1,2
+							this.getPlayer().setSheildNum(this.getPlayer().getSheildNum()+1);
+						}
+						else if ((val*num10s%1)==0 && this.getPlayer().getMagickNum()<this.getPlayer().getMagicks().size()-1){ 
 							//and the magic num is less than the max size. there are 4 magicks at 0,1,2,3
 							this.getPlayer().setMagickNum(this.getPlayer().getMagickNum()+1);
 						}
