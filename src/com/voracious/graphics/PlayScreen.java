@@ -404,8 +404,7 @@ public class PlayScreen extends Screen {
 			if(InputHandler.isPressed(KeyEvent.VK_LEFT)&&!displaySpell){
 				this.getPlayer().setCurrentMp(cMP-costMP);
 				this.getPlayer().getMagicks().get(magNum).getE().setX(this.getPlayer().getPlayerE().getX()-this.getPlayer().getMagicks().get(magNum).getE().getWidth());
-				this.getPlayer().getMagicks().get(magNum).getE().setY(this.getPlayer().getPlayerE().getY()+(this.getPlayer().getMagicks().get(magNum).getE().getHeight()/2));
-				this.getPlayer().getMagicks().get(magNum).getE().setVx(-3.0);
+				this.getPlayer().getMagicks().get(magNum).getE().setY(this.getPlayer().getPlayerE().getY()+(this.getPlayer().getPlayerE().getHeight()/2)-(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getHeight()/2));this.getPlayer().getMagicks().get(magNum).getE().setVx(-3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 				this.displaySpell=true;
 				
@@ -423,7 +422,7 @@ public class PlayScreen extends Screen {
 			else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)&&!displaySpell){
 				this.getPlayer().setCurrentMp(cMP-costMP);
 				this.getPlayer().getMagicks().get(magNum).getE().setX(this.getPlayer().getPlayerE().getX()+this.getPlayer().getWIDTH());
-				this.getPlayer().getMagicks().get(magNum).getE().setY(this.getPlayer().getPlayerE().getY()+(this.getPlayer().getMagicks().get(magNum).getE().getHeight()/2));
+				this.getPlayer().getMagicks().get(magNum).getE().setY(this.getPlayer().getPlayerE().getY()+(this.getPlayer().getPlayerE().getHeight()/2)-(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getHeight()/2));
 				this.getPlayer().getMagicks().get(magNum).getE().setVx(3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 				
@@ -452,15 +451,22 @@ public class PlayScreen extends Screen {
 			}
 			if(this.canMove(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE()))//check walls
 				removeSpell();
-			else//Move across the screen.
-				//TODO why no ticking?
+			else{
 				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().tick();//tick it
+				isOffScreen(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()));
+			}
 		}
 		else{
 		}
 		
 		this.displaySheild=false;
 		this.displaySword=false;
+	}
+	
+	public void isOffScreen(Magic mag){
+		if(!this.canMove(mag.getE())){
+			displaySpell=false;
+		}
 	}
 	
 	/**
