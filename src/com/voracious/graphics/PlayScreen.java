@@ -272,7 +272,7 @@ public class PlayScreen extends Screen {
 	/**
 	 * This method determines if a shield needs to be placed and performs hit tests.
 	 */
-	public void defendShield(){//TODO why is sheild after clearing a level in top left corner?
+	public void defendShield(){
 		Sheild tmp=this.getPlayer().getSheilds().get(this.getPlayer().getSheildNum());
 		double playerX=this.getPlayer().getPlayerE().getX();
 		double playerY=this.getPlayer().getPlayerE().getY();
@@ -403,22 +403,17 @@ public class PlayScreen extends Screen {
 			int magNum=this.getPlayer().getMagickNum();
 			if(InputHandler.isPressed(KeyEvent.VK_LEFT)&&!displaySpell){
 				this.getPlayer().setCurrentMp(cMP-costMP);
-				this.getPlayer().getMagicks().get(magNum).getE().setX(
-						this.getPlayer().getPlayerE().getX());
-				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY(
-						this.getPlayer().getPlayerE().getY()+this.getPlayer().getHEIGHT()/2);
+				this.getPlayer().getMagicks().get(magNum).getE().setX(this.getPlayer().getPlayerE().getX()-this.getPlayer().getMagicks().get(magNum).getE().getWidth());
+				this.getPlayer().getMagicks().get(magNum).getE().setY(this.getPlayer().getPlayerE().getY()+(this.getPlayer().getMagicks().get(magNum).getE().getHeight()/2));
 				this.getPlayer().getMagicks().get(magNum).getE().setVx(-3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
-
 				this.displaySpell=true;
 				
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_UP)&&!displaySpell){
 				this.getPlayer().setCurrentMp(cMP-costMP);
-				this.getPlayer().getMagicks().get(magNum).getE().setX(
-						this.getPlayer().getPlayerE().getX()+(this.getPlayer().getWIDTH()/2));
-				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY(
-						this.getPlayer().getPlayerE().getY());
+				this.getPlayer().getMagicks().get(magNum).getE().setX(this.getPlayer().getPlayerE().getX()+(this.getPlayer().getWIDTH()/2)-(this.getPlayer().getMagicks().get(magNum).getE().getWidth()/2));
+				this.getPlayer().getMagicks().get(magNum).getE().setY(this.getPlayer().getPlayerE().getY()-this.getPlayer().getMagicks().get(magNum).getE().getHeight());
 				this.getPlayer().getMagicks().get(magNum).getE().setVy(-3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 
@@ -427,10 +422,8 @@ public class PlayScreen extends Screen {
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)&&!displaySpell){
 				this.getPlayer().setCurrentMp(cMP-costMP);
-				this.getPlayer().getMagicks().get(magNum).getE().setX(
-						this.getPlayer().getPlayerE().getX()+this.getPlayer().getWIDTH());
-				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY(
-						this.getPlayer().getPlayerE().getY()+this.getPlayer().getHEIGHT()/2);
+				this.getPlayer().getMagicks().get(magNum).getE().setX(this.getPlayer().getPlayerE().getX()+this.getPlayer().getWIDTH());
+				this.getPlayer().getMagicks().get(magNum).getE().setY(this.getPlayer().getPlayerE().getY()+(this.getPlayer().getMagicks().get(magNum).getE().getHeight()/2));
 				this.getPlayer().getMagicks().get(magNum).getE().setVx(3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 				
@@ -438,10 +431,8 @@ public class PlayScreen extends Screen {
 			}
 			else if(InputHandler.isPressed(KeyEvent.VK_DOWN)&&!displaySpell){
 				this.getPlayer().setCurrentMp(cMP-costMP);
-				this.getPlayer().getMagicks().get(magNum).getE().setX(
-						this.getPlayer().getPlayerE().getX()+(this.getPlayer().getWIDTH()/2));
-				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY(
-						this.getPlayer().getPlayerE().getY()+this.getPlayer().getHEIGHT());
+				this.getPlayer().getMagicks().get(magNum).getE().setX(this.getPlayer().getPlayerE().getX()+(this.getPlayer().getWIDTH()/2)-(this.getPlayer().getMagicks().get(magNum).getE().getWidth()/2));
+				this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().setY(this.getPlayer().getPlayerE().getY()+this.getPlayer().getHEIGHT());
 				this.getPlayer().getMagicks().get(magNum).getE().setVy(3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 
