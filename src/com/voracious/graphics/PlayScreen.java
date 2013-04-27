@@ -88,7 +88,13 @@ public class PlayScreen extends Screen {
 	    	this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getE().draw(this);
 	    }
 	    if(this.displaySword){
-	    	this.getPlayer().getSwords().get(this.getPlayer().getSwordNum()).getE().draw(this);
+	    	if(flip){
+	    		//this.getPlayer().getSwords().get(this.getPlayer().getSwordNum()).getE().draw(this, false, true, true);
+				this.getPlayer().getSwords().get(this.getPlayer().getSwordNum()).getE().draw(this, true, true, false);
+	    	}
+	    	else{
+	    		this.getPlayer().getSwords().get(this.getPlayer().getSwordNum()).getE().draw(this);
+	    	}
 	    }
 	    if(this.displaySheild){
 	    	this.getPlayer().getSheilds().get(this.getPlayer().getSwordNum()).getE().draw(this);
@@ -326,6 +332,8 @@ public class PlayScreen extends Screen {
 	/**
 	 * This method determines if a sword is needed on the screen and performs hit tests.
 	 */
+	private boolean flip=false;
+	private boolean wasUp=true;
 	public void swingSword(){
 		int swordnum=this.getPlayer().getSwordNum();
 		double playerX=this.getPlayer().getPlayerE().getX();
@@ -335,29 +343,32 @@ public class PlayScreen extends Screen {
 			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY-(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2)+(this.getPlayer().getPlayerE().getHeight()/2));
 			this.displaySword=true;
 			this.hitTestSword(swordnum);
+			flip=false;
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_UP)){
 			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+(this.getPlayer().getWIDTH()/2)-(this.getPlayer().getSwords().get(swordnum).getE().getWidth()/2));
 			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY-(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2)-(this.getPlayer().getPlayerE().getHeight()/4));
 			this.displaySword=true;
 			this.hitTestSword(swordnum);
+			flip=false;
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
 			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+this.getPlayer().getWIDTH());
 			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY-(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2)+(this.getPlayer().getPlayerE().getHeight()/2));
 			this.displaySword=true;
 			this.hitTestSword(swordnum);
+			flip=false;
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
 			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+(this.getPlayer().getWIDTH()/2)-(this.getPlayer().getSwords().get(swordnum).getE().getWidth()/2));
 			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY+this.getPlayer().getPlayerE().getHeight());
 			this.displaySword=true;
 			this.hitTestSword(swordnum);
+			flip=true;
 		}
 		else{
 			this.displaySword=false;
 		}
-
 		this.displaySpell=false;
 		this.displaySheild=false;
 	}
