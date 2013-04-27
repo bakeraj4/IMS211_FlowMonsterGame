@@ -62,6 +62,8 @@ public class PlayScreen extends Screen {
 	 */
 	@Override
 	public void render() {
+		System.out.println(this.getPlayer().getLoc().getFirst()+" "+this.getPlayer().getLoc().getSecond());
+		
 		//Draws the screen and the player.
 		s.draw(this, 0, 0);
 		player.getPlayerE().draw(this);
