@@ -332,25 +332,25 @@ public class PlayScreen extends Screen {
 		double playerY=this.getPlayer().getPlayerE().getY();
 		if(InputHandler.isPressed(KeyEvent.VK_LEFT)){
 			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX-(this.getPlayer().getSwords().get(swordnum).getE().getWidth()/2));
-			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY+(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2));
+			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY-(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2)+(this.getPlayer().getPlayerE().getHeight()/2));
 			this.displaySword=true;
 			this.hitTestSword(swordnum);
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_UP)){
-			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+(this.getPlayer().getWIDTH()/2));
-			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY-(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2));
+			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+(this.getPlayer().getWIDTH()/2)-(this.getPlayer().getSwords().get(swordnum).getE().getWidth()/2));
+			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY-(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2)-(this.getPlayer().getPlayerE().getHeight()/4));
 			this.displaySword=true;
 			this.hitTestSword(swordnum);
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_RIGHT)){
 			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+this.getPlayer().getWIDTH());
-			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY+(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2));
+			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY-(this.getPlayer().getSwords().get(swordnum).getE().getHeight()/2)+(this.getPlayer().getPlayerE().getHeight()/2));
 			this.displaySword=true;
 			this.hitTestSword(swordnum);
 		}
 		else if(InputHandler.isPressed(KeyEvent.VK_DOWN)){
-			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+(this.getPlayer().getWIDTH()/2));
-			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY+this.getPlayer().getSwords().get(swordnum).getE().getHeight());
+			this.getPlayer().getSwords().get(swordnum).getE().setX(playerX+(this.getPlayer().getWIDTH()/2)-(this.getPlayer().getSwords().get(swordnum).getE().getWidth()/2));
+			this.getPlayer().getSwords().get(swordnum).getE().setY(playerY+this.getPlayer().getPlayerE().getHeight());
 			this.displaySword=true;
 			this.hitTestSword(swordnum);
 		}
@@ -404,7 +404,8 @@ public class PlayScreen extends Screen {
 			if(InputHandler.isPressed(KeyEvent.VK_LEFT)&&!displaySpell){
 				this.getPlayer().setCurrentMp(cMP-costMP);
 				this.getPlayer().getMagicks().get(magNum).getE().setX(this.getPlayer().getPlayerE().getX()-this.getPlayer().getMagicks().get(magNum).getE().getWidth());
-				this.getPlayer().getMagicks().get(magNum).getE().setY(this.getPlayer().getPlayerE().getY()+(this.getPlayer().getPlayerE().getHeight()/2)-(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getHeight()/2));this.getPlayer().getMagicks().get(magNum).getE().setVx(-3.0);
+				this.getPlayer().getMagicks().get(magNum).getE().setY(this.getPlayer().getPlayerE().getY()+(this.getPlayer().getPlayerE().getHeight()/2)-(this.getPlayer().getMagicks().get(this.getPlayer().getMagickNum()).getHeight()/2));
+				this.getPlayer().getMagicks().get(magNum).getE().setVx(-3.0);
 				//3.0 arbitraty but i want it to be faster than a monster or player
 				this.displaySpell=true;
 				
