@@ -91,8 +91,7 @@ public class PlayScreen extends Screen {
 	    }
 	    if(this.displaySword){
 	    	if(flip){
-	    		//this.getPlayer().getSwords().get(this.getPlayer().getSwordNum()).getE().draw(this, false, true, true);
-				this.getPlayer().getSwords().get(this.getPlayer().getSwordNum()).getE().draw(this, true, true, false);
+	    		this.getPlayer().getSwords().get(this.getPlayer().getSwordNum()).getE().draw(this, true, true, false);
 	    	}
 	    	else{
 	    		this.getPlayer().getSwords().get(this.getPlayer().getSwordNum()).getE().draw(this);
@@ -645,9 +644,11 @@ public class PlayScreen extends Screen {
 			if(wasHit){
 				if(tmp.getMovement().equals("OutLineCCW")){//switch it
 					tmp.setMovement("OutLineCW");
+					//tmp.getE().draw(this, true, false, false);
 				}
 				else if(tmp.getMovement().equals("OutLineCW")){
 					tmp.setMovement("OutLineCCW");
+					//tmp.getE().draw(this, true, false, false);
 				}
 			}
 			else{
