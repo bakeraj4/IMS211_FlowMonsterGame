@@ -334,7 +334,6 @@ public class PlayScreen extends Screen {
 	 * This method determines if a sword is needed on the screen and performs hit tests.
 	 */
 	private boolean flip=false;
-	private boolean wasUp=true;
 	public void swingSword(){
 		int swordnum=this.getPlayer().getSwordNum();
 		double playerX=this.getPlayer().getPlayerE().getX();
@@ -387,7 +386,14 @@ public class PlayScreen extends Screen {
 			if(this.getPlayer().getSwords().get(swordIndex).getE().hitTest(temp.getE())){
 				//the monster was hit and will take damage and reacoil.
 				temp.takeDamage(this.getPlayer().getSwords().get(swordIndex).getPower()+this.getPlayer().getStats()[1]);
-				creatureReversal(temp);
+				if(temp.getMovement().equals("OutLineCCW")){//switch it
+					temp.setMovement("OutLineCW");
+				}
+				else if(temp.getMovement().equals("OutLineCW")){
+					temp.setMovement("OutLineCCW");
+				}
+				else
+					creatureReversal(temp);
 			}
 		}
 	}
@@ -627,6 +633,10 @@ public class PlayScreen extends Screen {
 				testBacktrack=false;
 				
 			}
+			else if(player.getPlayerE().hitTest(W_door)&&player.getPlayerE().hitTest(S_door)){
+				this.shutAllDoors();
+				testBacktrack=false;
+			}
 		}
 		
 		//This code block performs hit test on all of the monsters in the room with the player.
@@ -659,13 +669,12 @@ public class PlayScreen extends Screen {
 			if(wasHit){
 				if(tmp.getMovement().equals("OutLineCCW")){//switch it
 					tmp.setMovement("OutLineCW");
-					//tmp.getE().draw(this, true, false, false);
 				}
 				else if(tmp.getMovement().equals("OutLineCW")){
 					tmp.setMovement("OutLineCCW");
-					//tmp.getE().draw(this, true, false, false);
 				}
 			}
+			
 			else{
 				if(tmp.getMovement().equals("Close")){
 					moveCloser(tmp);
@@ -678,9 +687,15 @@ public class PlayScreen extends Screen {
 					moveFig8Knot(tmp);
 				}
 				else if(tmp.getMovement().equals("OutLineCCW")){
+					if(!this.canMove(tmp.getE())){
+						tmp.setMovement("OutLineCW");
+					}
 					moveOutLineCounterClockWise(tmp);
 				}
 				else if(tmp.getMovement().equals("OutLineCW")){
+					if(!this.canMove(tmp.getE())){
+						System.out.println("[iouou");
+					}
 					moveOutLineClockWise(tmp);
 				}
 
