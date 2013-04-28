@@ -59,7 +59,7 @@ public class GameData {
 		
 		//0,4
 		this.getMonsters().get(0).get(4).add(new Monster("skeleton.png",35,5,12,20,20,"OutLineCW"));
-		this.getMonsters().get(0).get(4).get(0).getE().setX(30);
+		this.getMonsters().get(0).get(4).get(0).getE().setX(36);
 		this.getMonsters().get(0).get(4).get(0).getE().setY(121-10);
 		this.getMonsters().get(0).get(4).add(new Monster("skeleton.png",53,5,12,20,20,"OutLineCW"));
 		this.getMonsters().get(0).get(4).get(1).getE().setX(150);
@@ -112,7 +112,7 @@ public class GameData {
 		this.getMonsters().get(1).get(4).get(2).getE().setY(17-15);
 		
 		//2,0
-		this.getMonsters().get(2).get(0).add(new Monster("tonberry.png",20,5,10,60,40,"Close"));
+		this.getMonsters().get(2).get(0).add(new Monster("tonberry.png",21,7,11,60,40,"Close"));
 		this.getMonsters().get(2).get(0).get(0).getE().setX(100);
 		this.getMonsters().get(2).get(0).get(0).getE().setY(29);
 		
@@ -131,24 +131,24 @@ public class GameData {
 		this.getMonsters().get(2).get(1).get(3).getE().setY(121-15);
 
 		//2,2
-		this.getMonsters().get(2).get(2).add(new Monster("wasp.png",21,7,11,22,18,"Close"));
+		this.getMonsters().get(2).get(2).add(new Monster("wasp.png",23,8,12,22,18,"Close"));
 		this.getMonsters().get(2).get(2).get(0).getE().setX(90);
 		this.getMonsters().get(2).get(2).get(0).getE().setY(20);
-		this.getMonsters().get(2).get(2).add(new Monster("wasp.png",21,7,11,22,18,"Close"));
+		this.getMonsters().get(2).get(2).add(new Monster("wasp.png",23,8,12,22,18,"Close"));
 		this.getMonsters().get(2).get(2).get(1).getE().setX(90);
 		this.getMonsters().get(2).get(2).get(1).getE().setY(130);
-		this.getMonsters().get(2).get(2).add(new Monster("antlion.png",10,3,8,15,10,"Rand"));
+		this.getMonsters().get(2).get(2).add(new Monster("antlion.png",16,4,10,15,10,"Rand"));
 		this.getMonsters().get(2).get(2).get(2).getE().setX(50);
 		this.getMonsters().get(2).get(2).get(2).getE().setY(40);
-		this.getMonsters().get(2).get(2).add(new Monster("antlion.png",10,3,8,15,10,"Rand"));
+		this.getMonsters().get(2).get(2).add(new Monster("antlion.png",16,4,10,15,10,"Rand"));
 		this.getMonsters().get(2).get(2).get(3).getE().setX(50);
 		this.getMonsters().get(2).get(2).get(3).getE().setY(60);
 
 		//2,3
-		this.getMonsters().get(2).get(3).add(new Monster("tortle.png",16,5,11,35,24,"Rand"));
+		this.getMonsters().get(2).get(3).add(new Monster("tortle.png",28,5,11,35,24,"Rand"));
 		this.getMonsters().get(2).get(3).get(0).getE().setX(80);
 		this.getMonsters().get(2).get(3).get(0).getE().setY(30);
-		this.getMonsters().get(2).get(3).add(new Monster("tortle.png",16,5,11,35,24,"Rand"));
+		this.getMonsters().get(2).get(3).add(new Monster("tortle.png",28,5,11,35,24,"Rand"));
 		this.getMonsters().get(2).get(3).get(1).getE().setX(30);
 		this.getMonsters().get(2).get(3).get(1).getE().setY(80);
 		this.getMonsters().get(2).get(3).add(new Monster("ogre.png",16,5,11,20,20,"Close"));
@@ -156,22 +156,22 @@ public class GameData {
 		this.getMonsters().get(2).get(3).get(2).getE().setY(45);
 
 		//2,4
-		this.getMonsters().get(2).get(4).add(new Monster("ghost.png",16,5,11,10,10,"Rand"));
+		this.getMonsters().get(2).get(4).add(new Monster("ghost.png",17,6,12,10,10,"Rand"));
 		this.getMonsters().get(2).get(4).get(0).getE().setX(75);
 		this.getMonsters().get(2).get(4).get(0).getE().setY(30);
-		this.getMonsters().get(2).get(4).add(new Monster("ghost.png",16,5,11,10,10,"Rand"));
+		this.getMonsters().get(2).get(4).add(new Monster("ghost.png",17,6,12,10,10,"Rand"));
 		this.getMonsters().get(2).get(4).get(1).getE().setX(30);
 		this.getMonsters().get(2).get(4).get(1).getE().setY(90);
-		this.getMonsters().get(2).get(4).add(new Monster("ghost.png",16,5,11,10,10,"Fig8Knot"));
+		this.getMonsters().get(2).get(4).add(new Monster("ghost.png",17,6,12,10,10,"Fig8Knot"));
 		this.getMonsters().get(2).get(4).get(2).getE().setX(150);
 		this.getMonsters().get(2).get(4).get(2).getE().setY(100);
-		this.getMonsters().get(2).get(4).add(new Monster("ghost.png",16,5,11,10,10,"Rand"));
+		this.getMonsters().get(2).get(4).add(new Monster("ghost.png",17,6,12,10,10,"Rand"));
 		this.getMonsters().get(2).get(4).get(3).getE().setX(120);
 		this.getMonsters().get(2).get(4).get(3).getE().setY(70);
-		this.getMonsters().get(2).get(4).add(new Monster("skeleton.png",35,5,12,20,20,"OutLineCW"));
+		this.getMonsters().get(2).get(4).add(new Monster("skeleton.png",50,8,12,20,20,"OutLineCW"));
 		this.getMonsters().get(2).get(4).get(4).getE().setX(30);
 		this.getMonsters().get(2).get(4).get(4).getE().setY(121-10);
-		this.getMonsters().get(2).get(4).add(new Monster("skeleton.png",53,5,12,20,20,"OutLineCW"));
+		this.getMonsters().get(2).get(4).add(new Monster("skeleton.png",50,8,12,20,20,"OutLineCW"));
 		this.getMonsters().get(2).get(4).get(5).getE().setX(150);
 		this.getMonsters().get(2).get(4).get(5).getE().setY(17-10);
 

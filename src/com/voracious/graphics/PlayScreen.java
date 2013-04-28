@@ -506,22 +506,22 @@ public class PlayScreen extends Screen {
 	 * This method determines if an entity can move. 
 	 * It doesn't take in consideration that an entity could move down with the wall when x=wall's x vx=1 and vy=1.
 	 * @param E The entity that will have its movement tested.
-	 * @return If the enitiy can move or not.
+	 * @return If the entity can move or not.
 	 */
 	public boolean canMove(Entity E){
 		//This section determines if the entity can move left or right.
-		if(E.getX()+(E.getWidth()/2)+E.getVx()>=171){
+		if(E.getX()+(E.getWidth()/2)+E.getVx()>172){
 			return false;
 		}
-		else if(E.getX()+(E.getWidth()/2)-E.getVx()<=36){
+		else if(E.getX()+(E.getWidth()/2)-E.getVx()<35){
 			return false;
 		}
 		
 		//This section determines if an entity can move up or down.
-		if(E.getY()+(E.getHeight()/2)-E.getVy()<=17){//17
+		if(E.getY()+(E.getHeight()/2)-E.getVy()<17){//17
 			return false;
 		}
-		else if(E.getY()+(E.getHeight()/2)+E.getVy()>=121){//121
+		else if(E.getY()+(E.getHeight()/2)+E.getVy()>122){//121
 			return false;
 		}
 		return true;
@@ -800,7 +800,7 @@ public class PlayScreen extends Screen {
 	 * @param tmp The monster moving.
 	 */
 	private void moveOutLineClockWise(Monster tmp){	
-		if(tmp.getE().getX()+((tmp.getE().getWidth())/2)<171 &&tmp.getE().getY()+ ((tmp.getE().getHeight())/2)==121){//moves accross the bottom to right
+		if(tmp.getE().getX()+tmp.getE().getVx()+((tmp.getE().getWidth())/2)<171 &&tmp.getE().getY()+ ((tmp.getE().getHeight())/2)==121){//moves accross the bottom to right
 			tmp.getE().setVx(1.0);
 			tmp.getE().setVy(0.0);
 		}
@@ -808,11 +808,11 @@ public class PlayScreen extends Screen {
 			tmp.getE().setVx(-1.0);
 			tmp.getE().setVy(0.0);
 		}
-		else if(tmp.getE().getY()+ ((tmp.getE().getHeight())/2)> 17 && tmp.getE().getX()+((tmp.getE().getWidth())/2)==171){//moves up right wall
+		else if(tmp.getE().getY()-tmp.getE().getVy()+ ((tmp.getE().getHeight())/2)> 17 && tmp.getE().getX()+((tmp.getE().getWidth())/2)==171){//moves up right wall
 			tmp.getE().setVy(-1.0);
 			tmp.getE().setVx(0.0);
 		}
-		else if(tmp.getE().getY()+ ((tmp.getE().getHeight())/2)< 121 && tmp.getE().getX()+((tmp.getE().getWidth())/2)==36){//moves down the left wall
+		else if(tmp.getE().getY()+tmp.getE().getVy()+ ((tmp.getE().getHeight())/2)< 121 && tmp.getE().getX()+((tmp.getE().getWidth())/2)==36){//moves down the left wall
 			tmp.getE().setVy(1.0);
 			tmp.getE().setVx(0.0);
 		}
@@ -825,27 +825,27 @@ public class PlayScreen extends Screen {
 	 * The monster will move around on the outside of the room counter counter-clockwise.
 	 * @param tmp The monster moving.
 	 */
-	private void moveOutLineCounterClockWise(Monster tmp){	
-		if(tmp.getE().getX()+((tmp.getE().getWidth())/2)<171 &&tmp.getE().getY()+ ((tmp.getE().getHeight())/2)==17){//moves accross the top to right
+	private void moveOutLineCounterClockWise(Monster tmp){
+		if(tmp.getE().getX()+tmp.getE().getVx()+((tmp.getE().getWidth())/2)<171 &&tmp.getE().getY()+ ((tmp.getE().getHeight())/2)==17){//moves accross the top to right
 			tmp.getE().setVx(1.0);
 			tmp.getE().setVy(0.0);
 		}
-		else if(tmp.getE().getX()+((tmp.getE().getWidth())/2)>36 && tmp.getE().getY()+ ((tmp.getE().getHeight())/2)==121){//moves arccoss the bottom to the left
+		else if(tmp.getE().getX()+tmp.getE().getVx()+((tmp.getE().getWidth())/2)>36 && tmp.getE().getY()+ ((tmp.getE().getHeight())/2)==121){//moves arccoss the bottom to the left
 			tmp.getE().setVx(-1.0);
 			tmp.getE().setVy(0.0);
 		}
-		else if(tmp.getE().getY()+ ((tmp.getE().getHeight())/2)> 17 && tmp.getE().getX()+((tmp.getE().getWidth())/2)==36){//moves up left wall
+		else if(tmp.getE().getY()+tmp.getE().getVy()+ ((tmp.getE().getHeight())/2)> 17 && tmp.getE().getX()+((tmp.getE().getWidth())/2)==36){//moves up left wall
 			tmp.getE().setVy(-1.0);
 			tmp.getE().setVx(0.0);
 		}
-		else if(tmp.getE().getY()+ ((tmp.getE().getHeight())/2)< 121 && tmp.getE().getX()+((tmp.getE().getWidth())/2)==171){//moves down the right wall
+		else if(tmp.getE().getY()-tmp.getE().getVy()+ ((tmp.getE().getHeight())/2)< 121 && tmp.getE().getX()+((tmp.getE().getWidth())/2)==171){//moves down the right wall
 			tmp.getE().setVy(1.0);
 			tmp.getE().setVx(0.0);
 		}
 		else{
 			tmp.getE().setVx(0.0);
 			tmp.getE().setVy(0.0);
-		}	
+		}
 	}
 	/**
 	 * This method will be used to determine if the current room is cleared.

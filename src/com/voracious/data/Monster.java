@@ -20,7 +20,7 @@ public class Monster {
 	
 	public void takeDamage(int playerTotalPower){
 		//if hp==0 then dead if less than 0 make it 0 to show dead
-		int damage=this.calcdamage(playerTotalPower);
+		int damage=this.calcdamage(playerTotalPower)+1;
 		int postHP=this.getHp()-damage;
 		if(postHP<0)
 			postHP=0;
