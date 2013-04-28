@@ -636,31 +636,46 @@ public class PlayScreen extends Screen {
 		Monster tmp;
 		for(int i=0;i<this.getData().getMonsters().get(x).get(y).size();i++){
 			tmp=this.getData().getMonsters().get(x).get(y).get(i);
-			
-			if(tmp.getMovement().equals("Close")){
-				moveCloser(tmp);
+			boolean wasHit=false;
+			for(int j=i;j<this.getData().getMonsters().get(x).get(y).size()-1;j++){
+				Monster tmp2=this.getData().getMonsters().get(x).get(y).get(j+1);
+				if(tmp.getE().hitTest(tmp2.getE()))
+					wasHit=true;
 			}
-			else if(tmp.getMovement().equals("Rand")){
-				moveRandom(tmp);
-				
+			if(wasHit){
+				if(tmp.getMovement().equals("OutLineCCW")){//switch it
+					tmp.setMovement("OutLineCW");
+				}
+				else if(tmp.getMovement().equals("OutLineCW")){
+					tmp.setMovement("OutLineCCW");
+				}
 			}
-			else if(tmp.getMovement().equals("Fig8Knot")){
-				moveFig8Knot(tmp);
+			else{
+				if(tmp.getMovement().equals("Close")){
+					moveCloser(tmp);
+				}
+				else if(tmp.getMovement().equals("Rand")){
+					moveRandom(tmp);
+
+				}
+				else if(tmp.getMovement().equals("Fig8Knot")){
+					moveFig8Knot(tmp);
+				}
+				else if(tmp.getMovement().equals("OutLineCCW")){
+					moveOutLineCounterClockWise(tmp);
+				}
+				else if(tmp.getMovement().equals("OutLineCW")){
+					moveOutLineClockWise(tmp);
+				}
+
+				//check the health status to see if it needs to be removed
+				if(tmp.getHp()<=0){
+					this.getData().getMonsters().get(x).get(y).remove(tmp);
+					this.player.setNumKills(this.player.getNumKills()+1);
+				}
+				else
+					tmp.getE().tick();
 			}
-			else if(tmp.getMovement().equals("OutLineCCW")){
-				moveOutLineCounterClockWise(tmp);
-			}
-			else if(tmp.getMovement().equals("OutLineCW")){
-				moveOutLineClockWise(tmp);
-			}
-			
-			//check the health status to see if it needs to be removed
-			if(tmp.getHp()<=0){
-				this.getData().getMonsters().get(x).get(y).remove(tmp);
-				this.player.setNumKills(this.player.getNumKills()+1);
-			}
-			else
-				tmp.getE().tick();
 		}
 	}
 	/**

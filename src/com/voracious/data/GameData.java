@@ -200,11 +200,15 @@ public class GameData {
 		this.getMonsters().get(4).get(0).get(1).getE().setY(70);
 
 		//4,1
-		this.getMonsters().get(4).get(0).add(new Monster("waterDragon.png",53,5,12,50,60,"Close"));
-		this.getMonsters().get(4).get(0).get(0).getE().setX(20);
-		this.getMonsters().get(4).get(0).get(0).getE().setY(30);
+		
 		
 		//4,2
+		this.getMonsters().get(4).get(2).add(new Monster("fireBird.png",53,5,12,75,50,"Fig8Knot"));
+		this.getMonsters().get(4).get(2).get(0).getE().setX(20);
+		this.getMonsters().get(4).get(2).get(0).getE().setY(30);
+		this.getMonsters().get(4).get(2).add(new Monster("waterDragon.png",53,5,12,50,60,"Close"));
+		this.getMonsters().get(4).get(2).get(1).getE().setX(20);
+		this.getMonsters().get(4).get(2).get(1).getE().setY(30);
 		
 		//4,3
 		this.getMonsters().get(4).get(3).add(new Monster("bat.png",10,0,1,10,7,"Rand"));
