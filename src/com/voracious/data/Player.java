@@ -42,7 +42,7 @@ public class Player {
 		int s[]={10,3,4,10};
 		this.setStats(s);
 		this.setCurrentHp(10);
-		this.setCurrentMp(1);
+		this.setCurrentMp(10);
 		this.setLoc(new Pair<Integer,Integer>(0, 0));
 	}
 	
@@ -110,6 +110,15 @@ public class Player {
 	//170 is the right bound
 	//17 is upper bound
 	//54 is the left bound
+	
+	public boolean isInRoom(){
+		if(this.getPlayerE().getX()+this.getPlayerE().getVx()<=174&&this.getPlayerE().getX()+this.getPlayerE().getVx()>=15){
+			if(this.getPlayerE().getY()+this.getPlayerE().getVy()<=121&&this.getPlayerE().getY()+this.getPlayerE().getVy()>=17){
+				return true;
+			}
+		}
+		return false;
+	}
 		
 	public boolean canMoveDown(){
 		if(this.getPlayerE().getY()>121){

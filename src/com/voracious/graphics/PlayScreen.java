@@ -62,7 +62,7 @@ public class PlayScreen extends Screen {
 	 */
 	@Override
 	public void render() {
-		System.out.println(this.getPlayer().getLoc().getFirst()+" "+this.getPlayer().getLoc().getSecond());
+		//System.out.println(this.getPlayer().getLoc().getFirst()+" "+this.getPlayer().getLoc().getSecond());
 		
 		//Draws the screen and the player.
 		s.draw(this, 0, 0);
@@ -405,6 +405,20 @@ public class PlayScreen extends Screen {
 	}
 	
 	/**
+	 * This method will make the player move in the opposite direction.
+	 * The method will call the tick method of the player to make it move.
+	 * @param play The player being moved backwards.
+	 * @param monst The monster that hit the player
+	 */
+	public void playerReversal(Player play, Monster monst){
+		for(int i=0;i<3&&play.isInRoom();i++){//Maybe 5 times
+			play.getPlayerE().setVx(monst.getE().getVx());
+			play.getPlayerE().setVy(monst.getE().getVy());
+			play.getPlayerE().tick();
+		}
+	}
+	
+	/**
 	 * This method will cast and handle the movement of spells.
 	 */
 	public void castSpell(){
@@ -621,6 +635,7 @@ public class PlayScreen extends Screen {
 		for(int i=0;i<this.getData().getMonsters().get(x).get(y).size();i++){//goes through all of the monsters in the room
 			Entity temp=this.getData().getMonsters().get(x).get(y).get(i).getE();
 			if(this.getPlayer().getPlayerE().hitTest(temp)){//player is in contact with a monster
+				this.playerReversal(this.getPlayer(),this.getData().getMonsters().get(x).get(y).get(i));
 				this.getPlayer().takeDamage(this.getData().getMonsters().get(x).get(y).get(i).getAttk()/*+100*/);
 			}
 		}
