@@ -3,7 +3,7 @@
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required                                        -->
     <target name="create_run_jar">
-        <jar destfile="C:/Users/Aaron Baker/Desktop/programmingProjects/workspace/IMS211_FlowMonsterGame/IMS211_DEMO.jar" filesetmanifest="mergewithoutmain">
+        <jar destfile="C:/Users/Aaron Baker/Desktop/programmingProjects/workspace/IMS211_FlowMonsterGame/IMS211_FINAL.jar" filesetmanifest="mergewithoutmain">
             <manifest>
                 <attribute name="Main-Class" value="com.voracious.graphics.Game"/>
                 <attribute name="Class-Path" value="."/>
