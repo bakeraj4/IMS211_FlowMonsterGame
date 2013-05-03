@@ -167,13 +167,13 @@ public class Game extends Canvas implements Runnable {
         g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
         
         //Draws the strings for me on the game over Screen.
-        if(this.currentScreen.getClass()==this.overS.getClass() &&overS.getS().getFileName().equals("gameOver.png")){
+        if(this.currentScreen.getClass()==this.overS.getClass() &&overS.getS().getFileName().equals("/gameOver.png")){
         	ArrayList<String> tmp=overS.getRanks();
         	for(int i=0, x=455,  y=125;i<tmp.size();i++,y+=20){
         		g.drawString(tmp.get(i), x, y);
         	}
         }
-        else if(this.currentScreen.getClass()==this.overS.getClass() &&overS.getS().getFileName().equals("Winner.png")){
+        else if(this.currentScreen.getClass()==this.overS.getClass() &&overS.getS().getFileName().equals("/Winner.png")){
         	ArrayList<String> tmp=overS.getRanks();
         	for(int i=0, x=505,  y=75;i<tmp.size();i++,y+=20){
         		g.drawString(tmp.get(i), x, y);

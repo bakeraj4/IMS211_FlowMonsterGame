@@ -21,7 +21,7 @@ public class GameOverScreen extends Screen {
 	private ArrayList<String> leaders=new ArrayList<String>();
 	public GameOverScreen(int width, int height,Player play) {
 		super(width, height);
-		s=new Sprite(200,150,"gameOver.png");
+		s=new Sprite(200,150,"/gameOver.png");
 		s.draw(this, -1, -1);
 		p=play;
 	}
@@ -50,7 +50,7 @@ public class GameOverScreen extends Screen {
 	}
 	
 	public void changeSprite(){
-		s=new Sprite(200,150,"Winner.png");
+		s=new Sprite(200,150,"/Winner.png");
 		s.draw(this,-1,-1);
 	}
 	

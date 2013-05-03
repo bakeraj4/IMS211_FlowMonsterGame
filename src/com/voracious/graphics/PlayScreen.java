@@ -47,7 +47,7 @@ public class PlayScreen extends Screen {
 	public PlayScreen(int width, int height) {
 		super(width, height);
 
-        s= new Sprite(200,150,"officalFloor.png");
+        s= new Sprite(200,150,"/officalFloor.png");
         s.draw(this, 0, 0);
         
         this.setData(new GameData());
@@ -214,9 +214,9 @@ public class PlayScreen extends Screen {
 	public void changeClearDoors(){
 		shutAllDoors();
 		if(this.getPlayer().getLoc().getFirst()<this.getData().getMonsters().size()-1)
-			N_door=new Entity(22,15,i,"upN_Door.png");
+			N_door=new Entity(22,15,i,"/upN_Door.png");
 		if(this.getPlayer().getLoc().getSecond()<this.getData().getMonsters().get(this.getPlayer().getLoc().getFirst()).size()-1)
-        	E_door=new Entity(14,17,i,"upE_Door.png");
+        	E_door=new Entity(14,17,i,"/upE_Door.png");
 	}
 	
 	/**
@@ -224,22 +224,21 @@ public class PlayScreen extends Screen {
 	 */
 	public void inNewRoom(){
 		shutAllDoors();
-		S_door=new Entity(22,15,i,"upS_Door.png");
-		W_door=new Entity(14,17,i,"upW_Door.png");
+		S_door=new Entity(22,15,i,"/upS_Door.png");
+		W_door=new Entity(14,17,i,"/upW_Door.png");
 	}
 	
 	/**
 	 * This method shuts all of the doors in a room.
 	 */
 	public void shutAllDoors(){
-		N_door=new Entity(22,15,i,"downN_door.png");
-        S_door=new Entity(22,15,i,"downS_door.png");
-        E_door=new Entity(14,17,i,"downE_door.png");
-        W_door=new Entity(14,17,i,"downW_door.png");
+		N_door=new Entity(22,15,i,"/downN_door.png");
+        S_door=new Entity(22,15,i,"/downS_door.png");
+        E_door=new Entity(14,17,i,"/downE_door.png");
+        W_door=new Entity(14,17,i,"/downW_door.png");
         try{
         	if(this.getData().getComplete()[this.getPlayer().getLoc().getFirst()][this.getPlayer().getLoc().getSecond()])
         		this.setPointGiven(false);
-        		//System.out.println(this.getPlayer().determineScore());
         }
         catch(NullPointerException e){
         	
@@ -593,7 +592,7 @@ public class PlayScreen extends Screen {
 	 * It checks for collisions with monsters and the rooms doors.
 	 */
 	private void characterHitTest() {
-		if(player.getPlayerE().hitTest(N_door)&& this.N_door.getFileName().equals("upN_Door.png")){
+		if(player.getPlayerE().hitTest(N_door)&& this.N_door.getFileName().equals("/upN_Door.png")){
 			//move the player up to the next room
 			this.getPlayer().getPlayerE().setY(121);
 			this.zeroVelocity(this.getPlayer().getPlayerE());
@@ -601,7 +600,7 @@ public class PlayScreen extends Screen {
 			this.inNewRoom();
 			testBacktrack=true;
 		}
-		else if(player.getPlayerE().hitTest(E_door)&& this.E_door.getFileName().equals("upE_Door.png")){
+		else if(player.getPlayerE().hitTest(E_door)&& this.E_door.getFileName().equals("/upE_Door.png")){
 			//move the player up to the next room
 			this.getPlayer().getPlayerE().setX(13);
 			this.zeroVelocity(this.getPlayer().getPlayerE());
@@ -615,20 +614,20 @@ public class PlayScreen extends Screen {
 		
 		//This section does hit tests with the s and w doors to see if the player will return to the previous room.
 		if(testBacktrack){
-			if(player.getPlayerE().hitTest(S_door)&&this.S_door.getFileName().equals("upS_Door.png")&&InputHandler.isPressed(KeyEvent.VK_S)){
+			if(player.getPlayerE().hitTest(S_door)&&this.S_door.getFileName().equals("/upS_Door.png")&&InputHandler.isPressed(KeyEvent.VK_S)){
 				this.getPlayer().getPlayerE().setY(17);
 				this.zeroVelocity(this.getPlayer().getPlayerE());
 				this.getPlayer().getLoc().setFirst(this.getPlayer().getLoc().getFirst()-1);
 				this.changeClearDoors();
 			}
-			else if(player.getPlayerE().hitTest(W_door)&&this.W_door.getFileName().equals("upW_Door.png")&&InputHandler.isPressed(KeyEvent.VK_A)){
+			else if(player.getPlayerE().hitTest(W_door)&&this.W_door.getFileName().equals("/upW_Door.png")&&InputHandler.isPressed(KeyEvent.VK_A)){
 				this.getPlayer().getPlayerE().setX(174);
 				this.zeroVelocity(this.getPlayer().getPlayerE());
 				this.getPlayer().getLoc().setSecond(this.getPlayer().getLoc().getSecond()-1);
 				this.changeClearDoors();
 			}
-			else if (player.getPlayerE().hitTest(S_door)&&this.S_door.getFileName().equals("upS_Door.png")&&(InputHandler.isPressed(KeyEvent.VK_W)||InputHandler.isPressed(KeyEvent.VK_A)||InputHandler.isPressed(KeyEvent.VK_D))||
-					player.getPlayerE().hitTest(W_door)&&this.W_door.getFileName().equals("upW_Door.png")&&(InputHandler.isPressed(KeyEvent.VK_S)||InputHandler.isPressed(KeyEvent.VK_W)||InputHandler.isPressed(KeyEvent.VK_D))){
+			else if (player.getPlayerE().hitTest(S_door)&&this.S_door.getFileName().equals("/upS_Door.png")&&(InputHandler.isPressed(KeyEvent.VK_W)||InputHandler.isPressed(KeyEvent.VK_A)||InputHandler.isPressed(KeyEvent.VK_D))||
+					player.getPlayerE().hitTest(W_door)&&this.W_door.getFileName().equals("/upW_Door.png")&&(InputHandler.isPressed(KeyEvent.VK_S)||InputHandler.isPressed(KeyEvent.VK_W)||InputHandler.isPressed(KeyEvent.VK_D))){
 				this.shutAllDoors();
 				testBacktrack=false;
 				

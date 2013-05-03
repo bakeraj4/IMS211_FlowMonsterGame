@@ -20,13 +20,13 @@ public class PauseScreen extends Screen {
 	Sprite s;//background img
 	Player plays;
 	ArrayList<Sprite> powerUps=new ArrayList<Sprite>();
-	Sprite[] pows={new Sprite(45,40,"hearts.png"), new Sprite(45,40,"power.png"),
-			new Sprite(45,40,"dfence.png"),new Sprite(45,40,"mpPotion.png")};
+	Sprite[] pows={new Sprite(45,40,"/hearts.png"), new Sprite(45,40,"/power.png"),
+			new Sprite(45,40,"/dfence.png"),new Sprite(45,40,"/mpPotion.png")};
 	private boolean swap=false;
 	
 	public PauseScreen(int width, int height,Player play) {
 		super(width, height);
-        s= new Sprite(200,150,"pauseMenu.png");
+        s= new Sprite(200,150,"/pauseMenu.png");
         s.draw(this, 0, 0);
         plays=play;		
 	}
@@ -42,13 +42,13 @@ public class PauseScreen extends Screen {
 			
 		}
 		//banner
-		new Sprite(200,50,"names.png").draw(this, 0, 50);
+		new Sprite(200,50,"/names.png").draw(this, 0, 50);
 		//draws the power up points 
 		for(int i=0,j=0,k=0;i<plays.getNumPowerUps();i++){
 			if(i%2==0)
-				powerUps.add(new Sprite(20,15,"orange.png"));
+				powerUps.add(new Sprite(20,15,"/orange.png"));
 			else
-				powerUps.add(new Sprite(20,15,"purple.png"));
+				powerUps.add(new Sprite(20,15,"/purple.png"));
 			if(i%135==0){
 				k=0;
 				j+=5;

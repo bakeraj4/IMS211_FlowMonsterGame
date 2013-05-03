@@ -13,7 +13,7 @@ public class Player {
 	private ArrayList<Magic> magicks=new ArrayList<Magic>();
 	private int[] stats={0,0,0,0};//hp,attack,def,mp
 	private int currentHp,currentMp;
-	private String fileName="playerV2.png";//"smallPlayer.png";
+	private String fileName="/playerV2.png";//"smallPlayer.png";
 	//the filename is here but the actual image is store in the com.vocariuos.grpahics.componets
 	private final int HEIGHT=14;//15;
 	private final int WIDTH=12;//20;
@@ -51,33 +51,30 @@ public class Player {
 	}
 	
 	private void initSheilds() {
-		//TODO make sure the demensions are correct for the shields
-		this.getSheilds().add(new Sheild("basicSheild.png",3,4,3));
-		this.getSheilds().add(new Sheild("mediumSheild.png",7,4,6));
-		this.getSheilds().add(new Sheild("hyruleShield.png",15,8,9));
+		this.getSheilds().add(new Sheild("/basicSheild.png",3,4,3));
+		this.getSheilds().add(new Sheild("/mediumSheild.png",7,4,6));
+		this.getSheilds().add(new Sheild("/hyruleShield.png",15,8,9));
 		
 	}
 
 	private void initSwords() {
-		this.getSwords().add(new Sword("smallSword.png",1,5,8));
-		this.getSwords().add(new Sword("medSword.png",5,5,16));
-		this.getSwords().add(new Sword("iceSword.png",10,5,16));
-		this.getSwords().add(new Sword("kisameSword.png",15,5,17));
-		this.getSwords().add(new Sword("excalibur.png",15,7,19));
+		this.getSwords().add(new Sword("/smallSword.png",1,5,8));
+		this.getSwords().add(new Sword("/medSword.png",5,5,16));
+		this.getSwords().add(new Sword("/iceSword.png",10,5,16));
+		this.getSwords().add(new Sword("/kisameSword.png",15,5,17));
+		this.getSwords().add(new Sword("/excalibur.png",15,7,19));
 	}
 
 	/**
 	 * This initializes the fire spells that the player has access to.
 	 */
 	private void initMagicks() {
-		this.getMagicks().add(new Magic("smallFire.png",1,2,10,10));
-		this.getMagicks().add(new Magic("medFire.png",3,5,40,40));
-		this.getMagicks().add(new Magic("largeFire.png",5,12,60,60));
-		this.getMagicks().add(new Magic("xLargeFire.png",6,20,100,100));
+		this.getMagicks().add(new Magic("/smallFire.png",1,2,10,10));
+		this.getMagicks().add(new Magic("/medFire.png",3,5,40,40));
+		this.getMagicks().add(new Magic("/largeFire.png",5,12,60,60));
+		this.getMagicks().add(new Magic("/xLargeFire.png",6,20,100,100));
 	}
 	
-	//TODO the shield adds to deffense, but if in use and touches oppontes acts like a block and takes no dammage
-
 	/**
 	 * This method determines the damage that the player will take from another scource. The differance between the total attackers power
 	 * and the total defense.
